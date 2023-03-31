@@ -34,5 +34,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "Project 3",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MagicCrouton/programmersToolkit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MagicCrouton/programmersToolkit/issues"
+  },
+  "homepage": "https://github.com/MagicCrouton/programmersToolkit#readme"
 }
