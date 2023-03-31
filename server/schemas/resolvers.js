@@ -1,7 +1,7 @@
 const { User, Book } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
-// const { param } = require('../routes');
+const { param } = require('../routes');
 
 const resolvers = {
 
@@ -52,4 +52,5 @@ const resolvers = {
         },
     }
 };
+// Adding more mutation in the future for saveTool and delete tool
 module.exports = resolvers;
