@@ -1,33 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
-import Header from './components/header';
-import Footer from './components/footer';
+import React from 'react';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import Navbar from './components/Navbar';
+// add these two library import statements
+import { ApolloProvider } from '@apollo/react-hooks';
+import ApolloClient from 'apollo-boost';
+import Home from './pages/Home';
+
+
+const client = new ApolloClient({
+  uri: '/graphql',
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
-    <div className="App">
-      <div className="className='flex justify-center mt-10 items-center"> </div>
-      <header className="App-header">
-        <Header/>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <Footer />
-    </div>
+    <ApolloProvider client={client}>
+    
+      <Router>
+        <div className="flex-column justify-flex-start min-100-vh">
+          <Header />
+          <div className="container">
+            
+            <Routes>
+             
+              <Route 
+                path="/" 
+                element={<Home />} 
+              />
+              {/* Define a route that will take in variable data */}
+              {/* This could be the searchTool button or box */}
+              {/* <Route 
+                path="/searchNewTool/:newToolId" 
+                element={<searchNewTool />} 
+              /> */}
+            </Routes>
+          </div>
+          <Footer />
+        </div>
+      </Router>
+    </ApolloProvider>
   );
-} 
-
-
+}
 
 export default App;
