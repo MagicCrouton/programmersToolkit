@@ -25,7 +25,7 @@ const userSchema = new Schema(
     // Need saveTool for data retrieve
     savedTools: [toolSchema],
   },
-  // set this to use virtual below
+ 
   {
     toJSON: {
       virtuals: true,
