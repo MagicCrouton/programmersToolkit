@@ -1,4 +1,4 @@
 const User = require('./User');
-const Tool = require('./Tool');
+const Project = require('./Project');
 
-module.exports = { User, Tool};
+module.exports = { User, Project};
