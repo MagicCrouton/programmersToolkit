@@ -1,33 +1,53 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-type Tool {
-    _id: ID!
-    toolId: String
-    name: String
-  }
-type User {
-    _id: ID!
+  type User {
+    _id: ID
     username: String
     email: String
-    savedTools: [Tool]
+    password: String
+    thoughts: [Thought]!
   }
-//   Input for savedTool?? 
-  type Query {
-    me: User  
+
+  type Thought {
+    _id: ID
+    thoughtText: String
+    thoughtAuthor: String
+    createdAt: String
+    comments: [Comment]!
   }
-  type Mutation {
-    login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
-//    Need one with user linked with savedTool
-}
-type Auth {
+
+  type Comment {
+    _id: ID
+    commentText: String
+    commentAuthor: String
+    createdAt: String
+  }
+
+  type Auth {
     token: ID!
     user: User
   }
+
+  type Query {
+    users: [User]
+    user(username: String!): User
+    thoughts(username: String): [Thought]
+    thought(thoughtId: ID!): Thought
+  }
+
+  type Mutation {
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    addThought(thoughtText: String!, thoughtAuthor: String!): Thought
+    addComment(
+      thoughtId: ID!
+      commentText: String!
+      commentAuthor: String!
+    ): Thought
+    removeThought(thoughtId: ID!): Thought
+    removeComment(thoughtId: ID!, commentId: ID!): Thought
+  }
 `;
 
-
-
-// export the typeDefs
 module.exports = typeDefs;
