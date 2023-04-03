@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { Form, Button, Alert } from 'react-bootstrap';
 
 // import { createUser } from '../utils/API';
@@ -50,6 +50,8 @@ const SignupForm = () => {
     <>
       {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        <h1>Sign up</h1>
+        
         {/* show alert if server response is bad */}
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your signup!
