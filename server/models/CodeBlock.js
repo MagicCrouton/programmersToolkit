@@ -6,7 +6,8 @@ const codeBlock = new Schema({
     {
       type: String,
     },
-  ]
+  ],
+  createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = codeBlock;

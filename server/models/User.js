@@ -20,7 +20,7 @@ const userSchema = new Schema({
     minlength: 5,
   },
   projects: [{
-    type: Schema.Types.ObjectID,
+    type: Schema.Types.ObjectId,
     ref: "project"
   }]
 });
