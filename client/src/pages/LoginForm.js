@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
+// import { redirect } from 'react-router-dom';
 
 // import { loginUser } from '../utils/API';
 import Auth from '../utils/auth';
 
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
@@ -24,11 +26,15 @@ const LoginForm = () => {
     event.preventDefault();
 
     try {
+      // alert("hello")
       const { data } = await loginUser({
         variables: { ...userFormData}
       });
 
       Auth.login(data.login.token)
+      
+      // return redirect("/project")
+
 
     } catch (e) {
       console.error(e);
@@ -44,6 +50,7 @@ const LoginForm = () => {
   return (
     <>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <h1>Log In</h1>
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your login credentials!
         </Alert>
@@ -75,9 +82,12 @@ const LoginForm = () => {
         <Button
           disabled={!(userFormData.email && userFormData.password)}
           type='submit'
-          variant='success'>
+          variant='warning'>
           Submit
         </Button>
+        <Link to="/signup">
+              <Button variant="primary">Signup</Button>
+      </Link>
       </Form>
       {error && <div>Login failed</div>}
     </>
