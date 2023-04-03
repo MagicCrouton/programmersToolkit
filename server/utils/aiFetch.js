@@ -8,12 +8,20 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const newCode = async (payload) => {
+ try {
+    console.log("payload", payload)
     const response = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: `${payload}`}],
   });
+
+  console.log(response.data)
   
   return(response.data.choices[0].message.content)
+ } catch(err) {
+    console.log(err);
+    return;
+ }
   // console.log(response.data.choices[0].message.content)
 }
 

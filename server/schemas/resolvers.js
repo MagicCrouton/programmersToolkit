@@ -1,6 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
+const {newCode} = require("../utils/aiFetch")
 
 const resolvers = {
   Query: {
@@ -13,6 +14,9 @@ const resolvers = {
   },
 
   Mutation: {
+    searchCode: async(parent, {code}, context) => {
+      return await newCode(code);
+    },
     addUser: async (parent, { username, email, password }) => {
       // First we create the user
       const user = await User.create({ username, email, password });

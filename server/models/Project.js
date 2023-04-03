@@ -7,6 +7,10 @@ const projectSchema = new Schema({
         required: true,
         unique: true
     },
+    projectId: {
+        type: String,
+        required: true,
+      },
     toolType: {
         type: String,
         required: true,
