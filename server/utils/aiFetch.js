@@ -7,15 +7,33 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const aiFetch = async () => {
-const response = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: "make a basic html header",
-    max_tokens: 100,
-    temperature: .5,
+const newCode = async (payload) => {
+    const response = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{role: "user", content: `${payload}`}],
   });
+  
+  return(response.data.choices[0].message.content)
+  // console.log(response.data.choices[0].message.content)
+}
 
+const editCode = async (target, payload) => {
+    const response = await openai.createEdit({
+        model: "code-davinci-edit-001",
+        input: `${target}`,
+        instruction: `${payload}`,
+      });
+return (response.data.choices[0].text)
 // console.log(response.data.choices[0].text)
 }
 
-module.exports= {aiFetch}
+// const test = async () => {
+//     let temp = await newCode('make a basic html site with header "i love coding"')
+//     let temp2 = await editCode(temp, "put a cute picture of a dog on this page")
+//     console.log(temp2)
+// }
+
+// test()
+
+
+module.exports= {newCode, editCode}
