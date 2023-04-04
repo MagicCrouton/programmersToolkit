@@ -11,6 +11,7 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  // ***used in third arguement to define context
   context: authMiddleware,
 });
 

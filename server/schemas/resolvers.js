@@ -1,7 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, Project } = require('../models');
 const { signToken } = require('../utils/auth');
-const {newCode} = require("../utils/aiFetch")
 
 const resolvers = {
   Query: {
@@ -14,8 +13,20 @@ const resolvers = {
   },
 
   Mutation: {
-    searchCode: async(parent, {code}, context) => {
-      return await newCode(code);
+    newProject: async(parent, {payload, projectName, projectDescription}, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedProject: payload, projectName, projectDescription } },
+          { new: true, runValidators: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+      // const user = await User.findById({context})
+      // // await 
+      // await user.createCode(payload)
+      // // return await newCode(code);
     },
     addUser: async (parent, { username, email, password }) => {
       // First we create the user
@@ -48,9 +59,50 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
+   
+  
     // fetchAI: async (parent, {userID, payLoad}) => {
       
     // }
+
+
+    // ***Add a third argument to the resolver to access data in our `context`(defined middleware in server.js) and lock down this route
+    addSkill: async (parent, { profileId, skill }, context) => {
+      // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
+      if (context.user) {
+        return Profile.findOneAndUpdate(
+          { _id: profileId },
+          {
+            $addToSet: { skills: skill },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+       // If user attempts to execute this mutation and isn't logged in, throw an error
+       throw new AuthenticationError('You need to be logged in!');
+      },
+      // Set up mutation so a logged in user can only remove their profile and no one else's
+    removeProfile: async (parent, args, context) => {
+      if (context.user) {
+        return Profile.findOneAndDelete({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    // Make it so a logged in user can only remove a skill from their own profile
+    removeSkill: async (parent, { skill }, context) => {
+      if (context.user) {
+        return Profile.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { skills: skill } },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
   },
 };
 

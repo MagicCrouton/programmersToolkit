@@ -1,6 +1,8 @@
 import React from 'react';
 import Navbar from '../Navbar'
 import { Link } from 'react-router-dom';
+// import 'site logo' from "file path"
+
 
 const Header = () => {
   return (
