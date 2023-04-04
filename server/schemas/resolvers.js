@@ -14,10 +14,19 @@ const resolvers = {
 
   Mutation: {
     newProject: async(parent, {payload, projectName, projectDescription}, context) => {
-      const user = await User.findById({context})
-      // await 
-      await user.createCode(payload)
-      // return await newCode(code);
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedProject: payload, projectName, projectDescription } },
+          { new: true, runValidators: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+      // const user = await User.findById({context})
+      // // await 
+      // await user.createCode(payload)
+      // // return await newCode(code);
     },
     addUser: async (parent, { username, email, password }) => {
       // First we create the user
@@ -50,9 +59,12 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
+   
+  
     // fetchAI: async (parent, {userID, payLoad}) => {
       
     // }
+    
   },
 };
 

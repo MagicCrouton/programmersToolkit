@@ -2,13 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Container, Col, Form, Button, Card, CardColumns, Row } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-// import { saveBook, searchGoogleBooks } from '../utils/API';
-// import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+
 import {SEARCH_CODE} from "../utils/mutations"
+// import { newCode, editCode } from "../utils/API";
 
-
-import {useQuery, useMutation} from '@apollo/client';
+import {useQuery, useMutation, gql} from '@apollo/client';
 import { SAVE_PROJECT } from '../utils/mutations';
+import { GET_ME } from '../utils/queries';
+import openai from 'openai';
+
+
+
+// const { data } = useQuery(GET_ME);
+// const meData = data;
 
 const ProjectSearch = () => {
   // create state for holding returned google api data
@@ -21,6 +27,8 @@ const ProjectSearch = () => {
 
   const [saveProject, {error}] = useMutation(SAVE_PROJECT );
   const [searchCode] = useMutation(SEARCH_CODE );
+  const [projectNameInput, setProjectNameInput] = useState('');
+  const [projectDescription, setProjectDescription] = useState('')
 
 
   
@@ -48,24 +56,8 @@ const ProjectSearch = () => {
 
   console.log(data.searchCode)
 
-      // const response = await newCode(searchInput);
-
-      // if (!response.ok) {
-      //   throw new Error('something went wrong!');
-      // }
-
-      // const newCode = async (payload) => {
-      //   const response = await openai.createChatCompletion({
-      //       model: "gpt-3.5-turbo",
-      //       messages: [{role: "user", content: `${payload}`}],
-      // });
       
-      // return(response.data.choices[0].message.content)
-      // console.log(response.data.choices[0].message.content)
-    // }
-
-    // setProjectSearch(newCode);
-      setSearchInput('');
+      setSearchInput('searchInput');
     } catch (err) {
       console.error(err);
     }
@@ -87,24 +79,49 @@ const ProjectSearch = () => {
 
     try {
      
-      const {data} = await saveProject({
-        variables: { input: projectToSave }
-      });
+      const response = await saveProject(projectToSave, token);
 
-      
-      setSavedProjectIds([...savedProjectIds, projectToSave.projectId]);
-    } catch (err) {
-      console.error(err);
+    if (!response.ok) {
+      throw new Error('something went wrong!');
     }
-  };
+
+    // update the `savedProjectIds` state with the new project's id
+    setSavedProjectIds([...savedProjectIds, projectId]);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <>
       {/* < fluid className='text-light bg-dark'> */}
       <Container>
-          <h1>How can we help with your Project?</h1>
+      {/* <h2 className="card-header">
+        {data?.User ? `${data.User.username}'s` : meData?.me?.username ? `${meData.me.username}'s` : 'Your'} friends have endorsed these skills...
+      </h2> */}
+          <h1>New Project Page</h1>
           <Form onSubmit={handleFormSubmit}>
           <Row>
+              <Col xs={12} md={4}>
+            <Form.Control
+              name='projectNameInput'
+              value={projectNameInput}
+              onChange={(e) => setProjectNameInput(e.value)}
+              type='text'
+              size='lg'
+              placeholder='Enter your project name'
+            />
+               </Col>
+               <Col xs={12} md={4}>
+            <Form.Control
+              name='projectDescription'
+              value={projectDescription}
+              onChange={(e) => setProjectDescription(e.value)}
+              type='text'
+              size='lg'
+              placeholder='Describe your project'
+            />
+          </Col>
               <Col xs={12} md={8}>
                 <Form.Control
                   name='searchInput'
@@ -115,6 +132,7 @@ const ProjectSearch = () => {
                   placeholder='Search for codes'
                 />
               </Col>
+             
               <Col xs={12} md={4}>
                 <Button type='submit' variant='success' size='lg'>
                   Submit Search
@@ -125,39 +143,38 @@ const ProjectSearch = () => {
         </Container>
       {/* </Jumbotron> */}
 
-      {/* <Container>
-        <h2>
-          {searchedBooks.length
-            ? `Viewing ${searchedBooks.length} results:`
-            : 'Search for a book to begin'}
-        </h2>
-        <CardColumns>
-          {searchedBooks.map((book) => {
-            return (
-              <Card key={book.bookId} border='dark'>
-                {book.image ? (
-                  <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
-                ) : null}
-                <Card.Body>
-                  <Card.Title>{book.title}</Card.Title>
-                  <p className='small'>Authors: {book.authors}</p>
-                  <Card.Text>{book.description}</Card.Text>
-                  {Auth.loggedIn() && (
-                    <Button
-                      disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
-                      className='btn-block btn-info'
-                      onClick={() => handleSaveBook(book.bookId)}>
-                      {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
-                        ? 'This book has already been saved!'
-                        : 'Save this Book!'}
-                    </Button>
-                  )}
-                </Card.Body>
-              </Card>
-            );
-          })}
-        </CardColumns>
-      </Container> */}
+      <Container>
+  <h2>
+    {projectSearch.length
+      ? `Viewing ${projectSearch.length} results:`
+      : 'Your search result below'}
+  </h2>
+  
+    {projectSearch.map((project) => {
+      return (
+        // Render each project as a Card component
+        <Card key={project.id}>
+          <Card.Body>
+            <Card.Title>{project.name}</Card.Title>
+            <Card.Text>{project.description}</Card.Text>
+          </Card.Body>
+        </Card>
+      );
+    })}
+    {/* {Auth.loggedIn() && (
+      <Button
+        disabled={savedProjectIds?.some((savedProjectId) => savedProjectId === project.projectId)}
+        className='btn-block btn-info'
+        onClick={() => handleSaveProject(project.projectId)}
+      >
+        {savedProjectIds?.some((savedProjectId) => savedProjectId === project.projectId)
+          ? 'This project has already been saved!'
+          : 'Save this project!'}
+      </Button>
+    )} */}
+  {/* </CardColumns> */}
+</Container>
+
     </>
   );
 };
