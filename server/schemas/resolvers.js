@@ -16,7 +16,7 @@ const resolvers = {
     newProject: async(parent, {payload, projectName, projectDescription}, context) => {
       const user = await User.findById({context})
       // await 
-      await user.createCode(payload)
+      await user.newProject(payload)
       // return await newCode(code);
     },
     addUser: async (parent, { username, email, password }) => {
