@@ -1,4 +1,5 @@
 import React from "react"
+import './about.css';
 // import 'logo' from "logo file path"
 
 function About(props) {

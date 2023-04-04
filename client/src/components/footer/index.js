@@ -1,5 +1,5 @@
 import React from 'react';
-// should we put a link here to github
+import './footer.css';
 
 function Footer () {
   return (

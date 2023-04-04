@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../Navbar'
 import { Link } from 'react-router-dom';
+import './header.css';
 // import 'site logo' from "file path"
 
 
