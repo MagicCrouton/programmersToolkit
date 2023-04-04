@@ -1,9 +1,10 @@
 import React from 'react';
+// should we put a link here to github
 
 function Footer () {
   return (
       <footer>
-          <h1>This is the footer, we can put something interesting here</h1>
+          <h3>Created by the Pensive Garlic Bread crew for You!</h3>
       </footer>
   )
 }
