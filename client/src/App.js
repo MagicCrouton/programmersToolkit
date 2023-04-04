@@ -1,7 +1,9 @@
 import React from 'react';
-// createHttplink needed to add token to header and capture from local storage
+//***createHttplink needed to add token to header and capture from local storage
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// needed for need to import setContext for authLink
+import { setContext } from '@apollo/client/link/context'
 
 import Home from './pages/Home';
 import Header from './components/Header';
@@ -15,12 +17,6 @@ const httpLink = createHttpLink({
   uri: '/graphql',
 });
 
-const client = new ApolloClient({
-  uri: '/graphql',
-  // ***httpLink needed for header decode to work
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-});
 
 // ***Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
@@ -35,6 +31,12 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const client = new ApolloClient({
+  uri: '/graphql',
+  // ***httpLink needed for header decode to work
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
