@@ -15,12 +15,12 @@ const newCode = async (payload) => {
         messages: [{role: "user", content: `${payload}`}],
   });
 
-  console.log(response.data)
-  
-  return(response.data.choices[0].message.content)
+//   console.log(response.data)
+  let data = response.data.choices[0].message.content
+  return data
  } catch(err) {
     console.log(err);
-    return;
+    // return;
  }
   // console.log(response.data.choices[0].message.content)
 }
@@ -42,6 +42,13 @@ return (response.data.choices[0].text)
 // }
 
 // test()
+
+// const newnew = async () => {
+//   let temp = await newCode('make a python script to talk to grbl')
+//   console.log(temp)
+// }
+
+// newnew()
 
 
 module.exports= {newCode, editCode}
