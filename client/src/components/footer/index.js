@@ -2,9 +2,13 @@ import React from 'react';
 
 function Footer () {
   return (
+    <div>
       <footer>
-          <h1>This is the footer, we can put something interesting here</h1>
+          <div class="align-center bg-primary text-light">
+            <h5>Pensive Garlic Bread, Inc © 2023</h5>
+          </div>
       </footer>
+    </div>
   )
 }
 
