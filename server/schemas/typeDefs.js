@@ -39,7 +39,7 @@ type Project {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     saveProject(input: savedProject!): User
-    searchCode(code: String): String
+    newProject(payload: String!, projectName: String!, projectDescription!): User
   }
 `;
 
