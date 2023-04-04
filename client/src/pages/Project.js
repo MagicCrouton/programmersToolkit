@@ -9,7 +9,7 @@ import {SEARCH_CODE} from "../utils/mutations"
 import {useQuery, useMutation, gql} from '@apollo/client';
 import { SAVE_PROJECT } from '../utils/mutations';
 import { GET_ME } from '../utils/queries';
-import openai from 'openai';
+// import openai from 'openai';
 
 
 
