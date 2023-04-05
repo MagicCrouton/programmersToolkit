@@ -48,7 +48,7 @@ export const SAVE_PROJECT = gql`
 
 
 export const SEARCH_CODE = gql`
-mutation searchCode($code: String) {
-  searchCode(code: $code)
+mutation newProject($payload: String!, $projectName: String!, $projectDescription: String!) {
+  newProject(payload: $payload, projectName: $projectNameInput, projectdescription: $projectDescription)
 }
 `
