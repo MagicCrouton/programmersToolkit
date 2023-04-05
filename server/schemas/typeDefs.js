@@ -41,6 +41,6 @@ type Project {
     saveProject(input: savedProject!): User
     newProject(payload: String!, projectName: String!, projectDescription: String!): User
   }
-`;
+`
 
 module.exports = typeDefs;
