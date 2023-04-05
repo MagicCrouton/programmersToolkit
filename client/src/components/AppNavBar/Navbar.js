@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from '../../pages/SignupForm';
 import LoginForm from '../../pages/LoginForm';
-import './Navbar.css';
+import './Navbar.css'
 
 import Auth from '../../utils/auth';
 
-const AppNavbar = () => {
+const AppNavBar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
@@ -79,4 +79,4 @@ const AppNavbar = () => {
   );
 };
 
-export default AppNavbar;
+export default AppNavBar;

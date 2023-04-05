@@ -12,10 +12,6 @@ const projectSchema = new Schema({
         type: String,
         required: true,
       },
-    // toolType: {
-    //     type: String,
-    //     required: true,
-    // },
     projectDescription: {
         type: String
     },

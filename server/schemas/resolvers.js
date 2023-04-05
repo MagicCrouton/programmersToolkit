@@ -1,6 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Project } = require('../models');
 const { signToken } = require('../utils/auth');
+const {newCode, editCode} = require('../utils/aiFetch')
 
 const resolvers = {
   Query: {
@@ -15,12 +16,15 @@ const resolvers = {
   Mutation: {
     newProject: async(parent, {payload, projectName, projectDescription}, context) => {
       if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { savedProject: payload, projectName, projectDescription } },
-          { new: true, runValidators: true }
-        );
-        return updatedUser;
+        const newProjectUser = await User.findById(context.user._id)
+        await newProjectUser.newProject(payload, projectName, projectDescription)
+        // const initialCode = await newCode(payload);
+        // const updatedUser = await User.newProject(
+        //   { _id: context.user._id },
+        //   { $addToSet: { savedProject: initialCode, projectName, projectDescription } },
+        //   { new: true, runValidators: true }
+        // );
+        // return ;
       }
       throw new AuthenticationError("You need to be logged in!");
       // const user = await User.findById({context})
