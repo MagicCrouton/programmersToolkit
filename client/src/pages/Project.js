@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Col, Form, Button, Card, CardColumns, Row } from 'react-bootstrap';
+// import { Container, Col, Form, Button, Card, CardColumns, Row } from 'react-bootstrap';
+import { Container, Form, Button, Card, CardColumns, Row, Col, Box } from 'react-bootstrap';
+
 
 import Auth from '../utils/auth';
 
@@ -7,8 +9,11 @@ import {SEARCH_CODE} from "../utils/mutations"
 // import { newCode, editCode } from "../utils/API";
 
 import {useQuery, useMutation, gql} from '@apollo/client';
+
 import { SAVE_PROJECT } from '../utils/mutations';
-import { GET_ME } from '../utils/queries';
+import { NEW_CODE } from '../utils/mutations';
+
+// import { GET_ME, NEW_PROJECT} from '../utils/queries';
 // import openai from 'openai';
 
 
@@ -26,7 +31,7 @@ const ProjectSearch = () => {
   const [savedProjectIds, setSavedProjectIds] = useState([]);
 
   const [saveProject, {error}] = useMutation(SAVE_PROJECT );
-  const [searchCode] = useMutation(SEARCH_CODE );
+  const [newCode] = useMutation(NEW_CODE );
   const [projectNameInput, setProjectNameInput] = useState('');
   const [projectDescription, setProjectDescription] = useState('')
 
@@ -37,7 +42,7 @@ const ProjectSearch = () => {
   // });
 
   // create method to search for books and set state on form submit
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async event => {
     event.preventDefault();
 
     if (!searchInput) {
@@ -45,21 +50,28 @@ const ProjectSearch = () => {
     }
 
     try {
-      const { loading, error, data } = await searchCode({
-        variables: {
-          payLoad: searchInput,
-          projectName: projectNameInput,
-          projectDescription: projectDescription,
-        }
-      });
+      const { loading, error, data } = await newCode( {
+          variables : {
+            code: searchInput
+          }
+      })
+      // const { loading, error, data } = await searchCode({
+      //   variables: {
+      //     payLoad: searchInput,
+      //     projectNameInput: projectNameInput,
+      //     projectDescription: projectDescription,
+      //   }
+      // });
 
+      // console.log('loading:', loading);
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 
-  console.log(data.searchCode)
 
-      
-      setSearchInput('searchInput');
+ console.log(data.newCode)
+
+     setProjectSearch(data)
+      setSearchInput('');
     } catch (err) {
       console.error(err);
     }
@@ -108,23 +120,24 @@ const ProjectSearch = () => {
             <Form.Control
               name='projectNameInput'
               value={projectNameInput}
-              onChange={(e) => setProjectNameInput(e.value)}
+              onChange={(e) => setProjectNameInput(e.target.value)}
               type='text'
               size='lg'
               placeholder='Enter your project name'
+             
             />
                </Col>
-               <Col xs={12} md={4}>
+             <Col xs={12} md={4}>
             <Form.Control
               name='projectDescription'
               value={projectDescription}
-              onChange={(e) => setProjectDescription(e.value)}
+              onChange={(e) => setProjectDescription(e.target.value)}
               type='text'
               size='lg'
               placeholder='Describe your project'
             />
           </Col>
-              <Col xs={12} md={8}>
+              <Col xs={12} md={4}>
                 <Form.Control
                   name='searchInput'
                   value={searchInput}
@@ -136,7 +149,7 @@ const ProjectSearch = () => {
               </Col>
              
               <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
+                <Button type='submit' variant='success' size='sm'>
                   Submit Search
                 </Button>
               </Col>

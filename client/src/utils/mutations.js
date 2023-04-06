@@ -45,10 +45,14 @@ export const SAVE_PROJECT = gql`
         }
     }
 `;
-
+export const NEW_CODE = gql `
+mutation newCode ($code: String) {
+  newCode(code: code)
+}
+`
 
 export const SEARCH_CODE = gql`
-mutation newProject($payload: String!, $projectName: String!, $projectDescription: String!) {
-  newProject(payload: $payload, projectName: $projectNameInput, projectdescription: $projectDescription)
+mutation newProject($payload: String!, $projectNameInput: String!, $projectDescription: String!) {
+  newProject(payload: $payload, projectNameInput: $projectNameInput, projectdescription: $projectDescription)
 }
 `

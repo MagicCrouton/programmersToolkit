@@ -11,13 +11,20 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username })
     },
+    newCode: async(parent, {code}, context) => {
+      return await newCode(code);
+    }
   },
 
   Mutation: {
-    newProject: async(parent, {payload, projectName, projectDescription}, context) => {
+    // 
+    newProject: async(parent, {payload, projectNameInput, projectDescription}, context) => {
       if (context.user) {
         const newProjectUser = await User.findById(context.user._id)
-        await newProjectUser.newProject(payload, projectName, projectDescription)
+        await newProjectUser.newProject(payload, projectNameInput, projectDescription)
+
+
+        
         // const initialCode = await newCode(payload);
         // const updatedUser = await User.newProject(
         //   { _id: context.user._id },
@@ -31,6 +38,9 @@ const resolvers = {
       // // await 
       // await user.createCode(payload)
       // // return await newCode(code);
+    },
+    newCode: async(parent, {code}, context) => {
+      return await newCode(code);
     },
     addUser: async (parent, { username, email, password }) => {
       // First we create the user

@@ -4,7 +4,7 @@ const typeDefs = gql`
 type Project {
 
   projectId: String
-  projectName: String
+  projectNameInput: String
   toolType: String
   projectDescription: String
   createdAt: String
@@ -33,13 +33,15 @@ type Project {
   type Query {
     users: [User]
     user(username: String!): User
+    newCode(code: String): String
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     saveProject(input: savedProject!): User
-    newProject(payload: String!, projectName: String!, projectDescription: String!): Project
+    newProject(payload: String!, projectNameInput: String!, projectDescription: String!): User
+    newCode(code: String): String
   }
 `
 

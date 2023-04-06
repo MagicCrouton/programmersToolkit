@@ -3,7 +3,7 @@ const codeBlock = require('./CodeBlock')
 const {editCode} = require('../utils/aiFetch')
 
 const projectSchema = new Schema({
-    projectName: {
+    projectNameInput: {
         type: String,
         required: true,
         unique: true
