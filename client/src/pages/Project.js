@@ -47,7 +47,9 @@ const ProjectSearch = () => {
     try {
       const { loading, error, data } = await searchCode({
         variables: {
-          code: searchInput
+          payLoad: searchInput,
+          projectName: projectNameInput,
+          projectDescription: projectDescription,
         }
       });
 

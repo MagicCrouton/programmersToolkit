@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../Navbar'
+import AppNavBar from '../AppNavBar/Navbar'
 import { Link } from 'react-router-dom';
-import './header.css';
+// import '../AppNavBar/Navbar.css';
 // import 'site logo' from "file path"
 
 
@@ -14,7 +14,7 @@ const Header = () => {
           <h1 className="m-0">Programmer's ToolKit</h1>
         </Link>
       </div>
-      <Navbar />
+      <AppNavBar />
     </header>
 
     </div>
