@@ -44,7 +44,7 @@ return (response.data.choices[0].text)
 // test()
 
 // const newnew = async () => {
-//   let temp = await newCode('make a python script to talk to grbl')
+//   let temp = await newCode('how do you take form data from a react page and use a mutation on graphql in a full stack app')
 //   console.log(temp)
 // }
 

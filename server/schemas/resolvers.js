@@ -1,7 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Project } = require('../models');
 const { signToken } = require('../utils/auth');
-const {newCode, editCode} = require('../utils/aiFetch')
 
 const resolvers = {
   Query: {
@@ -14,10 +13,12 @@ const resolvers = {
   },
 
   Mutation: {
-    newProject: async(parent, {payload, projectName, projectDescription}, context) => {
+    newProject: async(parent, {initialCode, projectName, projectDescription}, context) => {
       if (context.user) {
         const newProjectUser = await User.findById(context.user._id)
-        await newProjectUser.newProject(payload, projectName, projectDescription)
+        const newProject = await Project.create({initialCode, projectName, projectDescription})
+        newProjectUser.projects.push(newProject)
+        newProjectUser.save()
         // const initialCode = await newCode(payload);
         // const updatedUser = await User.newProject(
         //   { _id: context.user._id },

@@ -47,8 +47,13 @@ export const SAVE_PROJECT = gql`
 `;
 
 
-export const SEARCH_CODE = gql`
+export const NEW_PROJECT = gql`
 mutation newProject($payload: String!, $projectName: String!, $projectDescription: String!) {
-  newProject(payload: $payload, projectName: $projectNameInput, projectdescription: $projectDescription)
+  newProject(payload: $payload, projectName: $projectName, projectdescription: $projectDescription) {
+    _id
+    projectName
+    projectdescription
+    initialCode
+  }
 }
 `

@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
-const {newCode} = require('../utils/aiFetch')
 
 const userSchema = new Schema({
   username: {
