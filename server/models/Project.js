@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const codeBlock = require('./CodeBlock')
-const {editCode} = require('../utils/aiFetch')
 
 const projectSchema = new Schema({
     projectName: {
@@ -12,6 +11,10 @@ const projectSchema = new Schema({
         type: String,
         required: true,
       },
+    // toolType: {
+    //     type: String,
+    //     required: true,
+    // },
     projectDescription: {
         type: String
     },

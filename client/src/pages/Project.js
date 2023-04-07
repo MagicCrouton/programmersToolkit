@@ -1,184 +1,96 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Col, Form, Button, Card, CardColumns, Row } from 'react-bootstrap';
-
-import Auth from '../utils/auth';
-
-import {SEARCH_CODE} from "../utils/mutations"
-// import { newCode, editCode } from "../utils/API";
-
-import {useQuery, useMutation, gql} from '@apollo/client';
-import { SAVE_PROJECT } from '../utils/mutations';
-import { GET_ME } from '../utils/queries';
-// import openai from 'openai';
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { NEW_PROJECT } from '../utils/mutations';
+import {newCode, editCode} from '../utils/API'
 
 
+const NewProjectForm = () => {
+  const [formState, setFormState] = useState({
+    projectName: '',
+    projectDescription: '',
+    payload: '',
+  });
+  const [characterCount, setCharacterCount] = useState(0);
 
-// const { data } = useQuery(GET_ME);
-// const meData = data;
+  // Set up our mutation with an option to handle errors
+  const [newProject, { error }] = useMutation(NEW_PROJECT);
 
-const ProjectSearch = () => {
-  // create state for holding returned google api data
-  const [projectSearch, setProjectSearch] = useState([]);
-  // create state for holding our search field data
-  const [searchInput, setSearchInput] = useState('');
-
-//   create state to hold saved searchId values
-  const [savedProjectIds, setSavedProjectIds] = useState([]);
-
-  const [saveProject, {error}] = useMutation(SAVE_PROJECT );
-  const [searchCode] = useMutation(SEARCH_CODE );
-  const [projectNameInput, setProjectNameInput] = useState('');
-  const [projectDescription, setProjectDescription] = useState('')
-
-
-  
-  // useEffect(() => {
-  //   return () => savedProjectIds(savedProjectIds);
-  // });
-
-  // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    if (!searchInput) {
-      return false;
-    }
-
+    const initialCode = await newCode(formState.payload)
+    const projectName = formState.projectName
+    const projectDescription = formState.projectDescription
+    // On form submit, perform mutation and pass in form data object as arguments
+    // It is important that the object fields are match the defined parameters in `ADD_THOUGHT` mutation
     try {
-      const { loading, error, data } = await searchCode({
+      const { data } = newProject({
         variables: {
-          payLoad: searchInput,
-          projectName: projectNameInput,
-          projectDescription: projectDescription,
-        }
+          initialCode,
+          projectName,
+          projectDescription
+         },
       });
 
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-
-  console.log(data.searchCode)
-
-      
-      setSearchInput('searchInput');
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
   };
 
-  // create function to handle saving a project data to our database
-  const handleSaveProject = async (projectId) => {
-    // find the book in `searchedBooks` state by the matching id
-    const projectToSave = projectSearch.find((project) => project.projectId === projectId);
-
- 
-
-    // get token
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    if (!token) {
-      return false;
-    }
-
-    try {
-     
-      const response = await saveProject(projectToSave, token);
-
-    if (!response.ok) {
-      throw new Error('something went wrong!');
-    }
-
-    // update the `savedProjectIds` state with the new project's id
-    setSavedProjectIds([...savedProjectIds, projectId]);
-  } catch (err) {
-    console.error(err);
-  }
-};
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({ ...formState, [name]: value });
+  };
 
   return (
-    <>
-      {/* < fluid className='text-light bg-dark'> */}
-      <Container>
-      {/* <h2 className="card-header">
-        {data?.User ? `${data.User.username}'s` : meData?.me?.username ? `${meData.me.username}'s` : 'Your'} friends have endorsed these skills...
-      </h2> */}
-          <h1>New Project Page</h1>
-          <Form onSubmit={handleFormSubmit}>
-          <Row>
-              <Col xs={12} md={4}>
-            <Form.Control
-              name='projectNameInput'
-              value={projectNameInput}
-              onChange={(e) => setProjectNameInput(e.value)}
-              type='text'
-              size='lg'
-              placeholder='Enter your project name'
-            />
-               </Col>
-               <Col xs={12} md={4}>
-            <Form.Control
-              name='projectDescription'
-              value={projectDescription}
-              onChange={(e) => setProjectDescription(e.value)}
-              type='text'
-              size='lg'
-              placeholder='Describe your project'
-            />
-          </Col>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for codes'
-                />
-              </Col>
-             
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-        </Container>
-      {/* </Jumbotron> */}
+    <div>
+      <h3>Lets Start a New Project</h3>
 
-      <Container>
-  <h2>
-    {projectSearch.length
-      ? `Viewing ${projectSearch.length} results:`
-      : 'Your search result below'}
-  </h2>
-  
-    {projectSearch.map((project) => {
-      return (
-        // Render each project as a Card component
-        <Card key={project.id}>
-          <Card.Body>
-            <Card.Title>{project.name}</Card.Title>
-            <Card.Text>{project.description}</Card.Text>
-          </Card.Body>
-        </Card>
-      );
-    })}
-    {/* {Auth.loggedIn() && (
-      <Button
-        disabled={savedProjectIds?.some((savedProjectId) => savedProjectId === project.projectId)}
-        className='btn-block btn-info'
-        onClick={() => handleSaveProject(project.projectId)}
+      <form
+        className="flex-row justify-center justify-space-between-md align-center"
+        onSubmit={handleFormSubmit}
       >
-        {savedProjectIds?.some((savedProjectId) => savedProjectId === project.projectId)
-          ? 'This project has already been saved!'
-          : 'Save this project!'}
-      </Button>
-    )} */}
-  {/* </CardColumns> */}
-</Container>
+        <div className="col-12 col-lg-9">
+          <input
+            name="projectName"
+            placeholder="What will you call your project?"
+            value={formState.projectName}
+            className="form-input w-100"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="col-12 col-lg-9">
+          <input
+            name="projectDescription"
+            placeholder="Describe Your project"
+            value={formState.projectDescription}
+            className="form-input w-100"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="col-12">
+          <textarea
+            name="payload"
+            placeholder="What would you like me to make?"
+            value={formState.payload}
+            className="form-input w-100"
+            onChange={handleChange}
+          ></textarea>
+        </div>
 
-    </>
+        <div className="col-12 col-lg-3">
+          <button className="btn btn-primary btn-block py-3" type="submit">
+            Start a New Project
+          </button>
+        </div>
+        {error && (
+          <div className="col-12 my-3 bg-danger text-white p-3">
+            Something went wrong...
+          </div>
+        )}
+      </form>
+    </div>
   );
 };
 
-export default ProjectSearch;
+export default NewProjectForm;
