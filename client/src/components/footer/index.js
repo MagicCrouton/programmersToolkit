@@ -5,8 +5,17 @@ function Footer () {
   return (
     <div>
       <footer>
-          <h3>Created by the Pensive Garlic Bread crew for You!</h3>
-          <a href="https://github.com/MagicCrouton/programmersToolkit">github</a>
+        <div class="footer-content">
+          <div class="header">
+            <h5>Created by the Pensive Garlic Bread crew for You.</h5>
+          </div>
+          <div class="links">
+            <a href="https://github.com/MagicCrouton/programmersToolkit"><img src="https://logoeps.com/wp-content/uploads/2014/05/37318-github-logo-icon-vector-icon-vector-eps.png" alt="" height="30px" width="30px"></img></a>
+          </div>
+          <div class="copywrite">
+            <p>Copywrite © 2023</p>
+          </div>
+        </div>
       </footer>
     </div>
   )

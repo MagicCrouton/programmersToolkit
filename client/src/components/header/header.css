@@ -1,0 +1,21 @@
+.navbar {
+    background-color: #20426b;
+    color: lightgray;
+    margin: 0px;
+    padding: 0px;
+    flex-direction: row;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+.tabs {
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+
+}
+
+.title {
+    color: white;
+}
