@@ -1,6 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Project } = require('../models');
 const { signToken } = require('../utils/auth');
+const {newCode, editCode}= require('../utils/aiFetch')
 
 const resolvers = {
   Query: {
@@ -16,21 +17,16 @@ const resolvers = {
     newProject: async(parent, {initialCode, projectName, projectDescription}, context) => {
       if (context.user) {
         const newProjectUser = await User.findById(context.user._id)
+        const firstIteration = await newCode(initialCode);
         const newProject = await Project.create({initialCode, projectName, projectDescription})
+        newProject.iterations.push(firstIteration)
         newProjectUser.projects.push(newProject)
         newProjectUser.save()
-        // const initialCode = await newCode(payload);
-        // const updatedUser = await User.newProject(
-        //   { _id: context.user._id },
-        //   { $addToSet: { savedProject: initialCode, projectName, projectDescription } },
-        //   { new: true, runValidators: true }
-        // );
-        // return ;
       }
       throw new AuthenticationError("You need to be logged in!");
       // const user = await User.findById({context})
       // // await 
-      // await user.createCode(payload)
+      // await user.createCode(initialCode)
       // // return await newCode(code);
     },
     addUser: async (parent, { username, email, password }) => {
@@ -66,7 +62,7 @@ const resolvers = {
     },
    
   
-    // fetchAI: async (parent, {userID, payLoad}) => {
+    // fetchAI: async (parent, {userID, initialCode}) => {
       
     // }
 

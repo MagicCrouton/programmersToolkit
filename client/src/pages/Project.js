@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { NEW_PROJECT } from '../utils/mutations';
-import {newCode, editCode} from '../utils/API'
+// import {newCode, editCode} from '../utils/API'
 
 
 const NewProjectForm = () => {
   const [formState, setFormState] = useState({
     projectName: '',
     projectDescription: '',
-    payload: '',
+    initialCode: '',
   });
   const [characterCount, setCharacterCount] = useState(0);
 
@@ -17,7 +17,7 @@ const NewProjectForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const initialCode = await newCode(formState.payload)
+    const initialCode = formState.initialCode
     const projectName = formState.projectName
     const projectDescription = formState.projectDescription
     // On form submit, perform mutation and pass in form data object as arguments
@@ -70,9 +70,9 @@ const NewProjectForm = () => {
         </div>
         <div className="col-12">
           <textarea
-            name="payload"
+            name="initialCode"
             placeholder="What would you like me to make?"
-            value={formState.payload}
+            value={formState.initialCode}
             className="form-input w-100"
             onChange={handleChange}
           ></textarea>

@@ -2,10 +2,9 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
 type Project {
-
-  projectId: String
+  _id: ID
   projectName: String
-  toolType: String
+  initialCode: String
   projectDescription: String
   createdAt: String
   iterations: [String]

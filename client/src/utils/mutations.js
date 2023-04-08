@@ -48,12 +48,11 @@ export const SAVE_PROJECT = gql`
 
 
 export const NEW_PROJECT = gql`
-mutation newProject($payload: String!, $projectName: String!, $projectDescription: String!) {
-  newProject(payload: $payload, projectName: $projectName, projectdescription: $projectDescription) {
-    _id
+mutation newProject($initalCode: String!, $projectName: String!, $projectDescription: String!) {
+  newProject(initalCode: $initalCode, projectName: $projectName, projectdescription: $projectDescription) {
     projectName
     projectdescription
-    initialCode
+    initalCode
   }
 }
 `
