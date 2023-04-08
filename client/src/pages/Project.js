@@ -1,37 +1,28 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { NEW_PROJECT } from '../utils/mutations';
+import { Form, Button, Alert } from 'react-bootstrap';
+import AuthService from "../utils/auth"
 // import {newCode, editCode} from '../utils/API'
 
 
 const NewProjectForm = () => {
-  const [formState, setFormState] = useState({
-    projectName: '',
-    projectDescription: '',
-    initialCode: '',
-  });
-  const [characterCount, setCharacterCount] = useState(0);
+  const [formState, setFormState] = useState({projectName: '', projectDescription: '', initialCode: '',});
 
   // Set up our mutation with an option to handle errors
-  const [newProject, { error }] = useMutation(NEW_PROJECT);
+  const [newProject] = useMutation(NEW_PROJECT);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const initialCode = formState.initialCode
-    const projectName = formState.projectName
-    const projectDescription = formState.projectDescription
+    // console.log(AuthService.getProfile().data)
     // On form submit, perform mutation and pass in form data object as arguments
     // It is important that the object fields are match the defined parameters in `ADD_THOUGHT` mutation
     try {
-      const { data } = newProject({
-        variables: {
-          initialCode,
-          projectName,
-          projectDescription
-         },
+      const { data } = await newProject({
+        variables: {...formState},
       });
-
-      window.location.reload();
+      console.log(data)
+      // window.location.reload();
     } catch (err) {
       console.error(err);
     }
@@ -43,53 +34,58 @@ const NewProjectForm = () => {
   };
 
   return (
-    <div>
-      <h3>Lets Start a New Project</h3>
-
-      <form
-        className="flex-row justify-center justify-space-between-md align-center"
-        onSubmit={handleFormSubmit}
-      >
-        <div className="col-12 col-lg-9">
-          <input
-            name="projectName"
-            placeholder="What will you call your project?"
+    <>
+      {/* This is needed for the validation functionality above */}
+      <Form onSubmit={handleFormSubmit}>
+        <h1>Sign up</h1>
+        
+        <Form.Group>
+          <Form.Label htmlFor='projectName'>Project Name</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='What is the Project Name?'
+            name='projectName'
+            onChange={handleChange}
             value={formState.projectName}
-            className="form-input w-100"
-            onChange={handleChange}
+            required
           />
-        </div>
-        <div className="col-12 col-lg-9">
-          <input
-            name="projectDescription"
-            placeholder="Describe Your project"
-            value={formState.projectDescription}
-            className="form-input w-100"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="col-12">
-          <textarea
-            name="initialCode"
-            placeholder="What would you like me to make?"
-            value={formState.initialCode}
-            className="form-input w-100"
-            onChange={handleChange}
-          ></textarea>
-        </div>
+          <Form.Control.Feedback type='invalid'>ProjectName is required!</Form.Control.Feedback>
+        </Form.Group>
 
-        <div className="col-12 col-lg-3">
-          <button className="btn btn-primary btn-block py-3" type="submit">
-            Start a New Project
-          </button>
-        </div>
-        {error && (
-          <div className="col-12 my-3 bg-danger text-white p-3">
-            Something went wrong...
-          </div>
-        )}
-      </form>
-    </div>
+        <Form.Group>
+          <Form.Label htmlFor='projectDescription'>Description</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Describe Your Project'
+            name='projectDescription'
+            onChange={handleChange}
+            value={formState.projectDescription}
+            required
+          />
+          <Form.Control.Feedback type='invalid'>Description is required!</Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label htmlFor='initialCode'>What can we start with?</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='What would you like to do?'
+            name='initialCode'
+            onChange={handleChange}
+            value={formState.initialCode}
+            required
+          />
+          <Form.Control.Feedback type='invalid'>Starting prompt is required!</Form.Control.Feedback>
+        </Form.Group>
+        <Button
+          disabled={!(formState.projectName && formState.projectDescription && formState.initialCode)}
+          type='submit'
+          variant='success'>
+          Submit
+        </Button>
+        {/* {error && <div>Sign up failed</div>} */}
+      </Form>
+    </>
   );
 };
 

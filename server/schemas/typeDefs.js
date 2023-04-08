@@ -14,6 +14,7 @@ type Project {
     username: String
     email: String
     password: String
+    projects: [Project]
   }
   input savedProject {
     projectId: String

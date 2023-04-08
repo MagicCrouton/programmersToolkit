@@ -11,17 +11,27 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username })
     },
+    
   },
 
   Mutation: {
     newProject: async(parent, {initialCode, projectName, projectDescription}, context) => {
       if (context.user) {
-        const newProjectUser = await User.findById(context.user._id)
+
+        // const newProjectUser = await User.findById(context.user._id);
         const firstIteration = await newCode(initialCode);
-        const newProject = await Project.create({initialCode, projectName, projectDescription})
-        newProject.iterations.push(firstIteration)
-        newProjectUser.projects.push(newProject)
-        newProjectUser.save()
+        const newProject = await Project.create({initialCode, projectName, projectDescription});
+        await newProject.iterations.push(firstIteration)
+        await User.findOneAndUpdate(
+          {_id: context.user._id},
+          {$addToSet: {projects: newProject}}
+        )
+        // newProject.newProject(initialCode);
+        // newProject.iterations.push(firstIteration)
+        // newProjectUser.projects.push(newProject);
+        // newProjectUser.save();
+
+        return newProject
       }
       throw new AuthenticationError("You need to be logged in!");
       // const user = await User.findById({context})
