@@ -2,8 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 
-import LoginForm from './LoginForm';
-import SignupForm from './SignupForm';
+import LoginForm from '../components/Login';
+import SignupForm from '../components/Signup';
 import Dashboard from '../components/Dashboard';
 import { GET_ME } from '../utils/queries';
 import AuthServices from '../utils/auth';

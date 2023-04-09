@@ -11,7 +11,9 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username })
     },
-    
+    project: async (parent, { _id }) => {
+      return Project.findOne({ _id })
+    },
   },
 
   Mutation: {
@@ -45,6 +47,25 @@ const resolvers = {
       // // await 
       // await user.createCode(initialCode)
       // // return await newCode(code);
+    },
+    saveProject: async(parent, {currentCode, prompt, projectID}, context) => {
+      if (context.user) {
+
+        // const newProjectUser = await User.findById(context.user._id);
+        const codeEdit = await editCode(currentCode, prompt)
+        const nextBlock = await CodeBlock.create({block: `${codeEdit}`})
+        const updatedProject = await Project.findOneAndUpdate(
+          {_id: projectID},
+          {$addToSet: {iterations: nextBlock}}
+        )
+        await User.findOneAndUpdate(
+          {_id: context.user._id},
+          {$addToSet: {projects: updatedProject}}
+        )
+
+        return updatedProject
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     addUser: async (parent, { username, email, password }) => {
       // First we create the user
