@@ -1,13 +1,18 @@
 require('dotenv').config()
 const { Configuration, OpenAIApi } = require('openai');
 
-const configuration = new Configuration({
-    apiKey: process.env.API_KEY
-})
+// const configuration = new Configuration({
+//     apiKey: process.env.API_KEY
+// })
 
-const openai = new OpenAIApi(configuration);
+// const openai = new OpenAIApi(configuration);
 
 const newCode = async (payload) => {
+  const { Configuration, OpenAIApi } = require('openai');
+  const configuration = await new Configuration({
+      apiKey: process.env.API_KEY
+  })
+  const openai = new OpenAIApi(configuration);
  try {
     console.log("payload", payload)
     const response = await openai.createChatCompletion({

@@ -7,7 +7,7 @@ type Project {
   initialCode: String
   projectDescription: String
   createdAt: String
-  iterations: [String]
+  iterations: [codeBlock]
 }
   type User {
     _id: ID
@@ -16,14 +16,11 @@ type Project {
     password: String
     projects: [Project]
   }
-  input savedProject {
-    projectId: String
-    projectName: String
-    toolType: String
-    projectDescription: String
-    createdAt: String
-    iterations: [String]
-}
+
+  type codeBlock {
+    _id: ID
+    block: String
+  }
 
   type Auth {
     token: ID!
@@ -38,7 +35,6 @@ type Project {
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    saveProject(input: savedProject!): User
     newProject(initialCode: String!, projectName: String!, projectDescription: String!): Project
   }
 `;

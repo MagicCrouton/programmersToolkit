@@ -20,14 +20,15 @@ const projectSchema = new Schema({
         type: String
     },
     createdAt: { type: Date, default: Date.now },
-    iterations: [codeBlock]
+    iterations: [{
+      type: Schema.Types.ObjectId,
+      ref: "codeBlock"
+    }]
 })
 
-projectSchema.methods.newProject= async function (payload) {
+projectSchema.methods.newCode= async function (payload) {
   let firstCode = await newCode(payload)
-  this.iteration.push({
-    firstCode
-  })
+  this.iterations.push(firstCode)
 }
 
 

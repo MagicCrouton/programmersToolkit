@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Project } = require('../models');
+const { User, Project, CodeBlock } = require('../models');
 const { signToken } = require('../utils/auth');
 const {newCode, editCode}= require('../utils/aiFetch')
 
@@ -19,9 +19,16 @@ const resolvers = {
       if (context.user) {
 
         // const newProjectUser = await User.findById(context.user._id);
-        const firstIteration = await newCode(initialCode);
+        const firstFetch = await newCode(initialCode)
+        const firstCodeBlock = await CodeBlock.create({block: `${firstFetch}`})
         const newProject = await Project.create({initialCode, projectName, projectDescription});
-        await newProject.iterations.push(firstIteration)
+        // console.log(newProject._id)
+        // newProject.iterations.push(firstCodeBlock)
+        // await newProject.newCode(initialCode);
+        await Project.findOneAndUpdate(
+          {_id: newProject._id},
+          {$addToSet: {iterations: firstCodeBlock}}
+        )
         await User.findOneAndUpdate(
           {_id: context.user._id},
           {$addToSet: {projects: newProject}}
