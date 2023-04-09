@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { NEW_PROJECT } from '../utils/mutations';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button} from 'react-bootstrap';
 import AuthService from "../utils/auth"
 // import {newCode, editCode} from '../utils/API'
 
@@ -19,12 +19,16 @@ const NewProjectForm = () => {
     // It is important that the object fields are match the defined parameters in `ADD_THOUGHT` mutation
     try {
       const { data } = await newProject({
-        variables: {...formState},
+        variables: {
+          projectName: formState.projectName,
+          projectDescription: formState.projectDescription,
+          initialCode: formState.initialCode
+        },
       });
       console.log(data)
       // window.location.reload();
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 
@@ -37,7 +41,7 @@ const NewProjectForm = () => {
     <>
       {/* This is needed for the validation functionality above */}
       <Form onSubmit={handleFormSubmit}>
-        <h1>Sign up</h1>
+        <h1>Lets Start Your New Project {AuthService.getProfile().data.username}</h1>
         
         <Form.Group>
           <Form.Label htmlFor='projectName'>Project Name</Form.Label>
