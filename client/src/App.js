@@ -10,7 +10,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import LoginForm from './pages/LoginForm';
 import SignupForm from './pages/SignupForm';
-import ProjectSearch from './pages/Project';
+import NewProjectForm from './components/NewProjectForm';
 
 // ***Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -60,7 +60,7 @@ function App() {
               />    
               <Route 
                 path="/project" 
-                element={<ProjectSearch />} 
+                element={<NewProjectForm />} 
               />    
             </Routes>
           </div>

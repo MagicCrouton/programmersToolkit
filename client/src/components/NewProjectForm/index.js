@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { NEW_PROJECT } from '../utils/mutations';
+import { NEW_PROJECT } from '../../utils/mutations';
 import { Form, Button} from 'react-bootstrap';
-import AuthService from "../utils/auth"
+import AuthService from "../../utils/auth"
 // import {newCode, editCode} from '../utils/API'
 
 
