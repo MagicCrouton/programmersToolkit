@@ -17,19 +17,16 @@ const NewProjectForm = () => {
     // console.log(AuthService.getProfile().data)
     // On form submit, perform mutation and pass in form data object as arguments
     // It is important that the object fields are match the defined parameters in `ADD_THOUGHT` mutation
-    try {
-      const { data } = await newProject({
+      // const { data } = 
+      await newProject({
         variables: {
           projectName: formState.projectName,
           projectDescription: formState.projectDescription,
           initialCode: formState.initialCode
-        },
+        }
       });
-      console.log(data)
+      // console.log(data)
       // window.location.reload();
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   const handleChange = (event) => {

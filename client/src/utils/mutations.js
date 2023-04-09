@@ -47,26 +47,13 @@ export const SAVE_PROJECT = gql`
 
 
 export const NEW_PROJECT = gql`
-mutation newProject($initalCode: String!, $projectName: String!, $projectDescription: String!) {
+mutation newProject($initialCode: String!, $projectName: String!, $projectDescription: String!) {
   newProject(initialCode: $initialCode, projectName: $projectName, projectDescription: $projectDescription) {
-    user {
-      _id
-      username
-      email
-      password
-      projects {
-        _id
-        createdAt
-        projectName
-        initialCode
-        projectName
-        projectDescription
-        iterations {
-          _id
-          block
-      }
-    }
-    }
+    projectName
+    initialCode
+    projectDescription
+    createdAt
+    _id
   }
 }
 `
