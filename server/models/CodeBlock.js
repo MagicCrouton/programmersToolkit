@@ -1,13 +1,13 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 
-const codeBlock = new Schema({
-  iteration: [
+const codeBlockSchema = new Schema({
+  block: 
     {
       type: String,
     },
-  ],
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = codeBlock;
+const CodeBlock = model('codeBlock', codeBlockSchema)
+module.exports = CodeBlock

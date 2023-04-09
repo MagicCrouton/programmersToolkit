@@ -1,13 +1,18 @@
-
+require('dotenv').config({path:__dirname+'/./../../.env'}) 
 const { Configuration, OpenAIApi } = require('openai');
 
-const configuration = new Configuration({
-    apiKey: process.env.API_KEY
-})
+// const configuration = new Configuration({
+//     apiKey: process.env.API_KEY
+// })
 
-const openai = new OpenAIApi(configuration);
+// const openai = new OpenAIApi(configuration);
 
 const newCode = async (payload) => {
+  const { Configuration, OpenAIApi } = require('openai');
+  const configuration = await new Configuration({
+      apiKey: process.env.API_KEY
+  })
+  const openai = new OpenAIApi(configuration);
  try {
     console.log("payload", payload)
     const response = await openai.createChatCompletion({
@@ -44,7 +49,7 @@ return (response.data.choices[0].text)
 // test()
 
 // const newnew = async () => {
-//   let temp = await newCode('how do you take form data from a react page and use a mutation on graphql in a full stack app')
+//   let temp = await newCode('make me a simple python script to talk to a grbl controller')
 //   console.log(temp)
 // }
 

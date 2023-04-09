@@ -25,6 +25,7 @@
     "url": "git+https://github.com/MagicCrouton/programmersToolkit.git"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "http-proxy-middleware": "^2.0.6",
     "openai": "^3.2.1"
   }
