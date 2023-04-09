@@ -37,7 +37,6 @@ export const SAVE_PROJECT = gql`
                 # 
                 projectName
                 projectId
-                toolType
                 projectDescription
                 createdAt
                 iterations
@@ -48,12 +47,13 @@ export const SAVE_PROJECT = gql`
 
 
 export const NEW_PROJECT = gql`
-mutation newProject($payload: String!, $projectName: String!, $projectDescription: String!) {
-  newProject(payload: $payload, projectName: $projectName, projectdescription: $projectDescription) {
-    _id
+mutation newProject($initialCode: String!, $projectName: String!, $projectDescription: String!) {
+  newProject(initialCode: $initialCode, projectName: $projectName, projectDescription: $projectDescription) {
     projectName
-    projectdescription
     initialCode
+    projectDescription
+    createdAt
+    _id
   }
 }
 `

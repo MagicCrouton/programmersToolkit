@@ -1,6 +1,6 @@
 import React from 'react';
 //***createHttplink needed to add token to header and capture from local storage
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from '@apollo/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // needed for need to import setContext for authLink
 import { setContext } from '@apollo/client/link/context'
@@ -10,7 +10,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import LoginForm from './pages/LoginForm';
 import SignupForm from './pages/SignupForm';
-import ProjectSearch from './pages/Project';
+import NewProjectForm from './components/NewProjectForm';
 
 // ***Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -26,16 +26,16 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
+      authorization: token ? `${token}` : '',
     },
   };
 });
 
 const client = new ApolloClient({
-  uri: '/graphql',
+  // uri: '/graphql',
   // ***httpLink needed for header decode to work
-  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
+  link: authLink.concat(httpLink),
 });
 
 function App() {
@@ -60,7 +60,7 @@ function App() {
               />    
               <Route 
                 path="/project" 
-                element={<ProjectSearch />} 
+                element={<NewProjectForm />} 
               />    
             </Routes>
           </div>

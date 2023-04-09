@@ -40,14 +40,14 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.newProject= async function (payload, projectName, projectDescription) {
-  let initialCode = await newCode(payload)
-  this.projects.push({
-    projectName,
-    projectDescription,
-    initialCode: initialCode
-  })
-}
+// userSchema.methods.newProject= async function (payload, projectName, projectDescription) {
+//   let initialCode = await newCode(payload)
+//   this.projects.push({
+//     projectName,
+//     projectDescription,
+//     initialCode: initialCode
+//   })
+// }
 
 // userSchema.methods.editCode = async function (target, payload) {
 //   return editCode(target, payload)
