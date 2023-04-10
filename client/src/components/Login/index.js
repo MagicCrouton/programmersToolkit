@@ -3,10 +3,10 @@ import { Form, Button, Alert } from 'react-bootstrap';
 // import { redirect } from 'react-router-dom';
 
 // import { loginUser } from '../utils/API';
-import Auth from '../utils/auth';
+import Auth from '../../utils/auth';
 
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
+import { LOGIN_USER } from '../../utils/mutations';
 import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
