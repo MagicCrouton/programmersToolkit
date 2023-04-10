@@ -43,7 +43,6 @@ const typeDefs = gql`
     saveProject(projectID: ID!, currentCode: String!): Project
     editProject(projectID: ID!, currentCode: String!, prompt: String!): Project
     removeProjectfromUser(projectId: ID!): User
-    
   }
 `;
 
