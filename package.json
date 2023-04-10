@@ -18,7 +18,8 @@
     "url": "https://github.com/MagicCrouton/programmersToolkit/issues"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "dotenv-webpack": "^8.0.1"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,8 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "http-proxy-middleware": "^2.0.6",
-    "openai": "^3.2.1"
+    "openai": "^3.2.1",
+    "os-browserify": "^0.3.0",
+    "path": "^0.12.7"
   }
 }

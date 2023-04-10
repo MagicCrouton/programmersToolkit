@@ -39,6 +39,6 @@ projectSchema.methods.editCode = async function (target, payload) {
     })
 }
 
-const Project = model('project', projectSchema)
+const Project = model('Project', projectSchema)
 
 module.exports = Project;

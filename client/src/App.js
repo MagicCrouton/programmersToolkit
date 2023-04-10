@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import LoginForm from './pages/LoginForm';
 import SignupForm from './pages/SignupForm';
 import NewProjectForm from './components/NewProjectForm';
+import ProjectList from './components/ProjectList';
 
 // ***Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -61,6 +62,10 @@ function App() {
               <Route 
                 path="/project" 
                 element={<NewProjectForm />} 
+              />    
+              <Route 
+                path="/projectList" 
+                element={<ProjectList />} 
               />    
             </Routes>
           </div>
