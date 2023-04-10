@@ -11,11 +11,8 @@ import Footer from './components/Footer';
 import LoginForm from './components/Login';
 import SignupForm from './components/Signup';
 import NewProjectForm from './components/NewProjectForm';
-<<<<<<< HEAD
-import Dashboard from './pages/Dashboard';
-=======
 import ProjectList from './components/ProjectList';
->>>>>>> 587939f20d12d073e10cc7d50a77d117e8137818
+import Dashboard from './components/Dashboard';
 
 // ***Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -70,15 +67,11 @@ function App() {
               <Route 
                 path="/newproject" 
                 element={<NewProjectForm />} 
-<<<<<<< HEAD
-              />      
-=======
               />    
               <Route 
                 path="/projectList" 
                 element={<ProjectList />} 
               />    
->>>>>>> 587939f20d12d073e10cc7d50a77d117e8137818
             </Routes>
           </div>
           <Footer />
