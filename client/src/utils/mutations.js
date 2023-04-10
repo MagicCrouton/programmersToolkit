@@ -57,3 +57,22 @@ mutation newProject($initialCode: String!, $projectName: String!, $projectDescri
   }
 }
 `
+
+export const REMOVE_PROJECT = gql`
+mutation removeProjectfromUser($projectId: ID!) {
+  removeProjectfromUser(projectId: $projectId) {
+    _id
+    username
+    email
+    password
+    projects {
+      _id
+      projectName
+      initialCode
+      projectDescription
+      createdAt
+      iterations
+    }
+  }
+}
+`

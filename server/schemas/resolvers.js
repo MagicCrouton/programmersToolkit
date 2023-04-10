@@ -11,9 +11,17 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username })
     },
-    project: async (parent, { _id }) => {
-      return Project.findOne({ _id })
+    me: async (parent, args, context) => {
+      return User.findOne({_id: context.user._id}).populate("projects")
     },
+    projects: async () => {
+      return Project.find();
+    },
+
+    project: async (parent, { projectId }) => {
+      return Project.findOne({ _id: projectId });
+    },
+    
   },
 
   Mutation: {
@@ -131,16 +139,16 @@ const resolvers = {
     //   throw new AuthenticationError('You need to be logged in!');
     // },
     // // Make it so a logged in user can only remove a skill from their own profile
-    // removeSkill: async (parent, { skill }, context) => {
-    //   if (context.user) {
-    //     return Profile.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $pull: { skills: skill } },
-    //       { new: true }
-    //     );
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+    removeProjectfromUser: async (parent, { projectId }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { projects: projectId }},
+          { new: true }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
 
   },
 };

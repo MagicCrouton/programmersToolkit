@@ -27,6 +27,8 @@ const NewProjectForm = () => {
       });
       // console.log(data)
       // window.location.reload();
+      window.location.assign('/projectList');
+
   };
 
   const handleChange = (event) => {
