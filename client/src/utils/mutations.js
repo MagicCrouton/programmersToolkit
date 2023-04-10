@@ -37,7 +37,6 @@ export const SAVE_PROJECT = gql`
                 # 
                 projectName
                 projectId
-                toolType
                 projectDescription
                 createdAt
                 iterations
@@ -47,8 +46,33 @@ export const SAVE_PROJECT = gql`
 `;
 
 
-export const SEARCH_CODE = gql`
-mutation newProject($payload: String!, $projectName: String!, $projectDescription: String!) {
-  newProject(payload: $payload, projectName: $projectNameInput, projectdescription: $projectDescription)
+export const NEW_PROJECT = gql`
+mutation newProject($initialCode: String!, $projectName: String!, $projectDescription: String!) {
+  newProject(initialCode: $initialCode, projectName: $projectName, projectDescription: $projectDescription) {
+    projectName
+    initialCode
+    projectDescription
+    createdAt
+    _id
+  }
+}
+`
+
+export const REMOVE_PROJECT = gql`
+mutation removeProjectfromUser($projectId: ID!) {
+  removeProjectfromUser(projectId: $projectId) {
+    _id
+    username
+    email
+    password
+    projects {
+      _id
+      projectName
+      initialCode
+      projectDescription
+      createdAt
+      iterations
+    }
+  }
 }
 `

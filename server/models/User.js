@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
-const {newCode} = require('../utils/aiFetch')
 
 const userSchema = new Schema({
   username: {
@@ -22,7 +21,7 @@ const userSchema = new Schema({
   },
   projects: [{
     type: Schema.Types.ObjectId,
-    ref: "project"
+    ref: "Project"
   }]
 });
 
@@ -41,14 +40,14 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.newProject= async function (payload, projectName, projectDescription) {
-  let initialCode = await newCode(payload)
-  this.projects.push({
-    projectName,
-    projectDescription,
-    initialCode: initialCode
-  })
-}
+// userSchema.methods.newProject= async function (payload, projectName, projectDescription) {
+//   let initialCode = await newCode(payload)
+//   this.projects.push({
+//     projectName,
+//     projectDescription,
+//     initialCode: initialCode
+//   })
+// }
 
 // userSchema.methods.editCode = async function (target, payload) {
 //   return editCode(target, payload)

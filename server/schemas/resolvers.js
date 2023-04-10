@@ -1,7 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Project } = require('../models');
+const { User, Project, CodeBlock } = require('../models');
 const { signToken } = require('../utils/auth');
-const {newCode, editCode} = require('../utils/aiFetch')
+const {newCode, editCode}= require('../utils/aiFetch')
 
 const resolvers = {
   Query: {
@@ -11,25 +11,49 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username })
     },
+    me: async (parent, args, context) => {
+      return User.findOne({_id: context.user._id}).populate("projects")
+    },
+    projects: async () => {
+      return Project.find();
+    },
+
+    project: async (parent, { projectId }) => {
+      return Project.findOne({ _id: projectId });
+    },
+    
   },
 
   Mutation: {
-    newProject: async(parent, {payload, projectName, projectDescription}, context) => {
+    newProject: async(parent, {initialCode, projectName, projectDescription}, context) => {
       if (context.user) {
-        const newProjectUser = await User.findById(context.user._id)
-        await newProjectUser.newProject(payload, projectName, projectDescription)
-        // const initialCode = await newCode(payload);
-        // const updatedUser = await User.newProject(
-        //   { _id: context.user._id },
-        //   { $addToSet: { savedProject: initialCode, projectName, projectDescription } },
-        //   { new: true, runValidators: true }
-        // );
-        // return ;
+
+        // const newProjectUser = await User.findById(context.user._id);
+        const firstFetch = await newCode(initialCode)
+        const firstCodeBlock = await CodeBlock.create({block: `${firstFetch}`})
+        const newProject = await Project.create({initialCode, projectName, projectDescription});
+        // console.log(newProject._id)
+        // newProject.iterations.push(firstCodeBlock)
+        // await newProject.newCode(initialCode);
+        await Project.findOneAndUpdate(
+          {_id: newProject._id},
+          {$addToSet: {iterations: firstCodeBlock}}
+        )
+        await User.findOneAndUpdate(
+          {_id: context.user._id},
+          {$addToSet: {projects: newProject}}
+        )
+        // newProject.newProject(initialCode);
+        // newProject.iterations.push(firstIteration)
+        // newProjectUser.projects.push(newProject);
+        // newProjectUser.save();
+
+        return newProject
       }
       throw new AuthenticationError("You need to be logged in!");
       // const user = await User.findById({context})
       // // await 
-      // await user.createCode(payload)
+      // await user.createCode(initialCode)
       // // return await newCode(code);
     },
     addUser: async (parent, { username, email, password }) => {
@@ -65,7 +89,7 @@ const resolvers = {
     },
    
   
-    // fetchAI: async (parent, {userID, payLoad}) => {
+    // fetchAI: async (parent, {userID, initialCode}) => {
       
     // }
 
@@ -96,16 +120,16 @@ const resolvers = {
     //   throw new AuthenticationError('You need to be logged in!');
     // },
     // // Make it so a logged in user can only remove a skill from their own profile
-    // removeSkill: async (parent, { skill }, context) => {
-    //   if (context.user) {
-    //     return Profile.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $pull: { skills: skill } },
-    //       { new: true }
-    //     );
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+    removeProjectfromUser: async (parent, { projectId }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { projects: projectId }},
+          { new: true }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
 
   },
 };
