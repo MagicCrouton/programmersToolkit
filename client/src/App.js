@@ -72,10 +72,6 @@ function App() {
                 path="/projectList" 
                 element={<ProjectList />} 
               />    
-              <Route 
-                path="/projectMain" 
-                element={<ProjectMain />} 
-              />    
             </Routes>
           </div>
           <Footer />

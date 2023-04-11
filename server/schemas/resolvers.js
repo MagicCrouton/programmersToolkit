@@ -14,9 +14,9 @@ const resolvers = {
     me: async (parent, args, context) => {
       return User.findOne({_id: context.user._id}).populate("projects")
     },
-    projectMain: async (parent, args, context) => {
-      return User.findOne({_id: context.project._id}).populate("iterations")
-    },
+    // projectMain: async (parent, args, context) => {
+    //   return User.findOne({_id: context.project._id}).populate("iterations")
+    // },
 
     project: async (parent, { projectId }) => {
       return Project.findOne({ _id: projectId }).populate("iterations");
