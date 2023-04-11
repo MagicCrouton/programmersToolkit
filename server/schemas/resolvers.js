@@ -18,6 +18,7 @@ const resolvers = {
       return User.findOne({_id: context.project._id}).populate("iterations")
     },
 
+<<<<<<< HEAD
     // projects: async () => {
     //   return Project.find();
     // },
@@ -25,6 +26,11 @@ const resolvers = {
     // project: async (parent, { projectId }) => {
     //   return Project.findOne({ _id: projectId });
     // },
+=======
+    project: async (parent, { projectId }) => {
+      return Project.findOne({ _id: projectId }).populate("iterations");
+    },
+>>>>>>> f1445a0c9ba250f67f25031d6e9659683cff7158
     
   },
 
@@ -59,6 +65,35 @@ const resolvers = {
       // // await 
       // await user.createCode(initialCode)
       // // return await newCode(code);
+    },
+    editProject: async(parent, {currentCode, projectID, prompt}, context) => {
+      if (context.user) {
+
+        // const newProjectUser = await User.findById(context.user._id);
+        let iteration = await editCode(`${currentCode}`, prompt)
+        let nextBlock = await CodeBlock.create({block: `${iteration}`})
+        await Project.findOneAndUpdate(
+          {_id: projectID},
+          {$addToSet: {iterations: nextBlock}}
+        )
+
+        return nextBlock._id
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    saveProject: async(parent, {currentCode, projectID}, context) => {
+      if (context.user) {
+
+        // const newProjectUser = await User.findById(context.user._id);
+        let nextBlock = await CodeBlock.create({block: `${currentCode}`})
+        let updatedProject = await Project.findOneAndUpdate(
+          {_id: projectID},
+          {$addToSet: {iterations: nextBlock}}
+        )
+
+        return nextBlock._id
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     addUser: async (parent, { username, email, password }) => {
       // First we create the user
