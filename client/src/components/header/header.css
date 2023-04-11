@@ -1,21 +1,35 @@
-.navbar {
+#tabs {
     background-color: #20426b;
     color: lightgray;
-    margin: 0px;
-    padding: 0px;
-    flex-direction: row;
-    display: inline-block;
-    text-align: center;
-    width: 100%;
-}
-
-.tabs {
-    flex-direction: row;
+    display: flex;
     justify-content: space-around;
-    text-align: center;
-
+    width: 100%;
+    margin-bottom: 40px;
 }
 
-.title {
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    float: left;
+    min-height: 60px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+#title {
     color: white;
+
 }
+
+#login {
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+}
+
