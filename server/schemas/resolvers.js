@@ -6,18 +6,17 @@ const {newCode, editCode}= require('../utils/aiFetch')
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find()
+      return User.find().populate("projects")
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username })
+      return User.findOne({ username }).populate("projects")
     },
     me: async (parent, args, context) => {
       return User.findOne({_id: context.user._id}).populate("projects")
     },
-    // projectMain: async (parent, args, context) => {
-    //   return User.findOne({_id: context.project._id}).populate("iterations")
-    // },
-
+    projects: async () => {
+      return Project.find();
+    },
     project: async (parent, { projectId }) => {
       return Project.findOne({ _id: projectId }).populate("iterations");
     },

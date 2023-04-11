@@ -1,4 +1,50 @@
+
 footer {
-    background-color: blue;
-    color: white;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    width: 100%;
+}
+
+
+.footer-content {
+    background-color: #20426b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.header {
+    padding-top: 5px;
+    color: rgba(255, 255, 255, 0.781);
+}
+
+.links {
+    padding: 0px;
+    margin: 5px;
+    background-color: #20426b;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+
+.links:hover {
+    transition: 1s ease;
+    background-color: rgb(230, 196, 46);
+    border: 2px solid rgb(230, 196, 46);
+}
+
+.copywrite {
+    color: black;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.copywrite p {
+    font-size: 14px;
 }

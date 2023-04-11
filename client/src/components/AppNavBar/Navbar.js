@@ -12,19 +12,19 @@ const AppNavBar = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <>
-      <Navbar bg='dark' variant='dark' expand='lg'>
+    <div>
+      <Navbar id="loginControl">
         <Container fluid>
-        <Navbar>
-      <Link to="/">
-        <Navbar.Brand>
-          Home
-        </Navbar.Brand>
-      </Link>
-    </Navbar>
-          <Navbar.Toggle aria-controls='navbar' />
+          <Link to="/">
+            <div class='hover'>
+              <Navbar.Brand>
+                Home
+              </Navbar.Brand>
+            </div>
+          </Link>
           <Navbar.Collapse id='navbar'>
-            <Nav className='ml-auto'>
+            <hr color="white"></hr>
+            <Nav class='login hover'>
               <Nav.Link as={Link} to='/'>
                 {/* Your Magical Tool Kits */}
               </Nav.Link>
@@ -37,7 +37,7 @@ const AppNavBar = () => {
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+                <Nav.Link class="hover" onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
               )}
             </Nav> 
           </Navbar.Collapse>
@@ -75,7 +75,7 @@ const AppNavBar = () => {
           </Modal.Body>
         </Tab.Container>
       </Modal>
-    </>
+    </div>
   );
 };
 

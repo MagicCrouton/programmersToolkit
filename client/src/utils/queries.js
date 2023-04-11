@@ -35,7 +35,6 @@ query me {
       initialCode
       projectDescription
       createdAt
-      iterations
     }
   }
 }

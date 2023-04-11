@@ -1,0 +1,35 @@
+#tabs {
+    background-color: #20426b;
+    color: lightgray;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    float: left;
+    min-height: 60px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+#title {
+    color: white;
+
+}
+
+#login {
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+}
+
