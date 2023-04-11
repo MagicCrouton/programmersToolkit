@@ -31,7 +31,7 @@ const ProjectList = ({ }) => {
     <div>
       <h3 className="text-primary">Your Project</h3>
       <div className="flex-row justify-space-between my-4">
-        {userData?.projects.map((project) => (
+        {userData.projects.map((project) => (
             <div key={project._id} className="col-12 col-xl-6">
               <div className="card mb-3">
                 <h4 className="card-header bg-dark text-light p-2 m-0">
