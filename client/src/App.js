@@ -12,11 +12,7 @@ import LoginForm from './components/Login';
 import SignupForm from './components/Signup';
 import NewProjectForm from './components/NewProjectForm';
 import ProjectList from './components/ProjectList';
-<<<<<<< HEAD
-import ProjectMain from './components/ProjectMain';
-=======
 import Dashboard from './components/Dashboard';
->>>>>>> f1445a0c9ba250f67f25031d6e9659683cff7158
 
 // ***Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
