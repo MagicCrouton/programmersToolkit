@@ -14,13 +14,17 @@ const resolvers = {
     me: async (parent, args, context) => {
       return User.findOne({_id: context.user._id}).populate("projects")
     },
-    projects: async () => {
-      return Project.find();
+    projectMain: async (parent, args, context) => {
+      return User.findOne({_id: context.project._id}).populate("iterations")
     },
 
-    project: async (parent, { projectId }) => {
-      return Project.findOne({ _id: projectId });
-    },
+    // projects: async () => {
+    //   return Project.find();
+    // },
+
+    // project: async (parent, { projectId }) => {
+    //   return Project.findOne({ _id: projectId });
+    // },
     
   },
 
