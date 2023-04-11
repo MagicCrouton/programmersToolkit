@@ -9,3 +9,43 @@ export const GET_ME = gql`
     }
 }
 `;
+
+export const QUERY_PROJECTS = gql `
+query allProjects {
+  projects {
+    _id
+    projectName
+    initialCode
+    projectDescription
+    createdAt
+  }
+}
+`
+
+export const QUERY_ME = gql`
+query me {
+  me {
+    _id
+    username
+    email
+    password
+    projects {
+      _id
+      projectName
+      initialCode
+      projectDescription
+      createdAt
+      iterations
+    }
+  }
+}
+`
+export const QUERY_PROJECT = gql`
+ query project($projectId: ID!) {
+  project(projectId: $projectId) {
+    iterations
+    createdAt
+    projectDescription
+  }
+}
+`

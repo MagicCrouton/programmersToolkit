@@ -27,28 +27,49 @@ mutation addUser($username: String!, $password: String!, $email: String!) {
 }
 `;
 export const SAVE_PROJECT = gql`
-    mutation saveProject($input: savedProject!) {
-    saveProject (input: $input)
-        {
-            _id
-            username
-            email
-            savedProjects {
-                # 
-                projectName
-                projectId
-                toolType
-                projectDescription
-                createdAt
-                iterations
-            }
-        }
+    mutation saveProject($projectId: ID!, $currentCode: String!) {
+      saveProject(projectID: $projectId, currentCode: $currentCode) {
+        _id
+      }
     }
 `;
 
+export const EDIT_PROJECT = gql`
+    mutation editProject($projectId: ID!, $currentCode: String!, $prompt: String!) {
+      editProject(projectID: $projectId, currentCode: $currentCode, prompt: $prompt) {
+        _id
+      }
+    }
+`
 
-export const SEARCH_CODE = gql`
-mutation newProject($payload: String!, $projectName: String!, $projectDescription: String!) {
-  newProject(payload: $payload, projectName: $projectNameInput, projectdescription: $projectDescription)
+
+export const NEW_PROJECT = gql`
+mutation newProject($initialCode: String!, $projectName: String!, $projectDescription: String!) {
+  newProject(initialCode: $initialCode, projectName: $projectName, projectDescription: $projectDescription) {
+    projectName
+    initialCode
+    projectDescription
+    createdAt
+    _id
+  }
+}
+`
+
+export const REMOVE_PROJECT = gql`
+mutation removeProjectfromUser($projectId: ID!) {
+  removeProjectfromUser(projectId: $projectId) {
+    _id
+    username
+    email
+    password
+    projects {
+      _id
+      projectName
+      initialCode
+      projectDescription
+      createdAt
+      iterations
+    }
+  }
 }
 `

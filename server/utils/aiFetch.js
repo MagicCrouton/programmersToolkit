@@ -1,13 +1,18 @@
-require('dotenv').config()
+require('dotenv').config({path:__dirname+'/./../../.env'}) 
 const { Configuration, OpenAIApi } = require('openai');
 
-const configuration = new Configuration({
-    apiKey: process.env.API_KEY
-})
+// const configuration = new Configuration({
+//     apiKey: process.env.API_KEY
+// })
 
-const openai = new OpenAIApi(configuration);
+// const openai = new OpenAIApi(configuration);
 
 const newCode = async (payload) => {
+  const { Configuration, OpenAIApi } = require('openai');
+  const configuration = await new Configuration({
+      apiKey: process.env.API_KEY
+  })
+  const openai = new OpenAIApi(configuration);
  try {
     console.log("payload", payload)
     const response = await openai.createChatCompletion({
@@ -26,6 +31,11 @@ const newCode = async (payload) => {
 }
 
 const editCode = async (target, payload) => {
+  const { Configuration, OpenAIApi } = require('openai');
+  const configuration = await new Configuration({
+      apiKey: process.env.API_KEY
+  })
+  const openai = new OpenAIApi(configuration);
     const response = await openai.createEdit({
         model: "code-davinci-edit-001",
         input: `${target}`,
@@ -44,7 +54,7 @@ return (response.data.choices[0].text)
 // test()
 
 // const newnew = async () => {
-//   let temp = await newCode('make a python script to talk to grbl')
+//   let temp = await newCode('make me a simple python script to talk to a grbl controller')
 //   console.log(temp)
 // }
 
