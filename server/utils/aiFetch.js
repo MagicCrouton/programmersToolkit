@@ -31,6 +31,11 @@ const newCode = async (payload) => {
 }
 
 const editCode = async (target, payload) => {
+  const { Configuration, OpenAIApi } = require('openai');
+  const configuration = await new Configuration({
+      apiKey: process.env.API_KEY
+  })
+  const openai = new OpenAIApi(configuration);
     const response = await openai.createEdit({
         model: "code-davinci-edit-001",
         input: `${target}`,
