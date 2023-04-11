@@ -15,7 +15,7 @@ const typeDefs = gql`
     initialCode: String
     projectDescription: String
     createdAt: String
-    iterations: [ID]
+    iterations: [codeBlock]
   }
 
   type codeBlock {
