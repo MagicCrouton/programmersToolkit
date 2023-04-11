@@ -13,8 +13,8 @@
 
 ## Description
  The Programmer's Toolkit was created to help developers, engineers, and the curious create, fix, and update their code using ChatGPT. 
-- Ask ChatGPT your question and store your code in your "toolkit".
-- Revisit previous ChatGPT searches as needed.
+* Ask ChatGPT your question and store your code in your "toolkit".
+* Revisit previous ChatGPT searches as needed.
                 
 <br>
 
@@ -26,24 +26,24 @@
 <br>
 
 ## Credits
-- Chat GPT
-- Open AI
+* Chat GPT
+* Open AI
 
 <br>
 
 ## Licenses
-- ISC
+* ISC
 
 <br>
 
 ## Contributors
-- Konny Ho
+* Konny Ho
 <br>
-- Eugene Park
+* Eugene Park
 <br>
-- Tim Aspesberro
+* Tim Aspesberro
 <br>
-- Mark Green
+* Mark Green
 
 
 
