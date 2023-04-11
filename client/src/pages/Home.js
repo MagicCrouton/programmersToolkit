@@ -26,7 +26,7 @@ const Home = () => {
   const { userData } = useQuery(GET_ME);
   return (
     <main >
-      <h1> Hello, How can We Help with ?</h1>
+      <h1> Hello, how can We help you?</h1>
         <Card>
             <Card.Img variant="top" src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
             <Card.Body>
