@@ -17,8 +17,8 @@ const resolvers = {
     projects: async () => {
       return Project.find();
     },
-    project: async (parent, { projectId }) => {
-      return Project.findOne({ _id: projectId }).populate("iterations");
+    project: async (parent, args, context) => {
+      return Project.findOne({_id: context.project._id }).populate("iterations");
     },
     
   },

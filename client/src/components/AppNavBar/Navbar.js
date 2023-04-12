@@ -22,6 +22,20 @@ const AppNavBar = () => {
               </Navbar.Brand>
             </div>
           </Link>
+          <Link to="/projectList">
+            <div class='hover'>
+              <Navbar.Brand>
+                View Project
+              </Navbar.Brand>
+            </div>
+          </Link>
+          <Link to="/newproject">
+            <div class='hover'>
+              <Navbar.Brand>
+                Create Project
+              </Navbar.Brand>
+            </div>
+          </Link>
           <Navbar.Collapse id='navbar'>
             <hr color="white"></hr>
             <Nav class='login hover'>

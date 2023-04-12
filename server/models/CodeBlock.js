@@ -9,5 +9,5 @@ const codeBlockSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const CodeBlock = model('codeBlock', codeBlockSchema)
+const CodeBlock = model('CodeBlock', codeBlockSchema)
 module.exports = CodeBlock

@@ -47,6 +47,9 @@ const ProjectList = ({ }) => {
               <button onClick={() => {handleDelete(project._id)} }>
                 Delete
               </button>
+              <button onClick={() => {window.location.assign('/projectMain')} }>
+                                    View Project
+                                </button>
             </div>
               </div>
             </div>

@@ -39,12 +39,16 @@ query me {
   }
 }
 `
-export const QUERY_PROJECT = gql`
- query project($projectId: ID!) {
-  project(projectId: $projectId) {
+export const QUERY_PROJECTMAIN = gql`
+query Projects {
+  projects {
+    _id
     projectName
+    initialCode
     projectDescription
+    createdAt
     iterations {
+      _id
       block
     }
   }

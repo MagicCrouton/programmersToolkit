@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const codeBlock = require('./CodeBlock')
+const CodeBlock = require('./CodeBlock')
 const {newCode, editCode} = require('../utils/aiFetch')
 
 const projectSchema = new Schema({
@@ -22,7 +22,7 @@ const projectSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
     iterations: [{
       type: Schema.Types.ObjectId,
-      ref: "codeBlock"
+      ref: "CodeBlock"
     }]
 })
 
