@@ -13,7 +13,7 @@ import SignupForm from './components/Signup';
 import NewProjectForm from './components/NewProjectForm';
 import ProjectList from './components/ProjectList';
 import ProjectMain from './components/ProjectMain'
-import Dashboard from './components/Dashboard';
+import Dashboard from './pages/Dashboard';
 
 
 // ***Construct our main GraphQL API endpoint
