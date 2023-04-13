@@ -17,8 +17,8 @@ const resolvers = {
     projects: async () => {
       return Project.find();
     },
-    project: async (parent, { projectId }) => {
-      return Project.findOne({ _id: projectId }).populate("iterations");
+    project: async (parent, args, context) => {
+      return Project.findOne({_id: context.project._id }).populate("iterations");
     },
     
   },
@@ -148,17 +148,33 @@ const resolvers = {
     //   throw new AuthenticationError('You need to be logged in!');
     // },
     // // Make it so a logged in user can only remove a skill from their own profile
+    // removeProjectfromUser: async (parent, { projectId }, context) => {
+    //   if (context.user) {
+    //     return User.findOneAndUpdate(
+    //       { _id: context.user._id },
+    //       { $pull: { projects: projectId }},
+    //       { new: true }
+    //     );
+    //   }
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
     removeProjectfromUser: async (parent, { projectId }, context) => {
       if (context.user) {
-        return User.findOneAndUpdate(
+        // Remove the project document from the Project collection
+        await Project.findByIdAndRemove(projectId);
+        
+        // Remove the project ID from the user's projects array
+        const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { projects: projectId }},
           { new: true }
-        );
+        ).populate("projects");
+    
+        return updatedUser;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-
+    
   },
 };
 

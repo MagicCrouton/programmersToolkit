@@ -15,10 +15,10 @@ const typeDefs = gql`
     initialCode: String
     projectDescription: String
     createdAt: String
-    iterations: [codeBlock]
+    iterations: [CodeBlock]
   }
 
-  type codeBlock {
+  type CodeBlock {
     _id: ID
     block: String
   }
@@ -31,8 +31,8 @@ const typeDefs = gql`
   type Query {
     users: [User]
     user(username: String!): User
-    projects: [Project]!
-    project(projectId: ID!): Project
+    projects: [Project]
+    project: Project
     me: User
   }
 
