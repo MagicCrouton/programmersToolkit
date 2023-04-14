@@ -11,7 +11,7 @@ const ProjectMain = ({}) => {
       }
     }); 
     const projectData = data?.project || {}
-    console.log(data.project.iterations[0].block)
+    // console.log(data.project.iterations[0].block)
     if (loading) {
         return <h3>Still Loading, please wait</h3>;
 
