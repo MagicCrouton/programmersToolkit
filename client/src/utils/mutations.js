@@ -94,3 +94,19 @@ export const REMOVE_PROJECT = gql`
     }
   }
 `;
+
+export const FIND_SINGLE_PROJECT = gql`
+  mutation findSingleProject ($projectId: ID!) {
+    findSingleProject(projectId: $projectId) {
+      _id
+      projectName
+      initialCode
+      projectDescription
+      createdAt
+      iterations {
+        _id
+        block
+      }
+    }
+  }
+`

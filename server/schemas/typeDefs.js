@@ -32,7 +32,7 @@ const typeDefs = gql`
     users: [User]
     user(username: String!): User
     projects: [Project]
-    project: Project
+    project(projectId: ID!): Project
     me: User
   }
 
@@ -43,6 +43,7 @@ const typeDefs = gql`
     saveProject(projectID: ID!, currentCode: String!): Project
     editProject(projectID: ID!, currentCode: String!, prompt: String!): Project
     removeProjectfromUser(projectId: ID!): User
+    findSingleProject(projectId: ID!): Project
   }
 `;
 
