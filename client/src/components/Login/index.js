@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 // import { redirect } from 'react-router-dom';
-
+import './login.css';
 // import { loginUser } from '../utils/API';
 import Auth from '../../utils/auth';
 
@@ -49,13 +49,13 @@ const LoginForm = () => {
 
   return (
     <>
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-      <h1>Log In</h1>
+      <Form noValidate validated={validated} onSubmit={handleFormSubmit} id="loginForm">
+      <h2>Log In</h2>
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your login credentials!
         </Alert>
         <Form.Group>
-          <Form.Label htmlFor='email'>Email</Form.Label>
+          <Form.Label htmlFor='email'>Email:</Form.Label>
           <Form.Control
             type='text'
             placeholder='Your email'
@@ -68,7 +68,7 @@ const LoginForm = () => {
         </Form.Group>
 
         <Form.Group>
-          <Form.Label htmlFor='password'>Password</Form.Label>
+          <Form.Label htmlFor='password'>Password:</Form.Label>
           <Form.Control
             type='password'
             placeholder='Your password'

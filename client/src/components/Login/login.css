@@ -1,0 +1,23 @@
+#loginForm {
+    margin-top: 100px;
+    margin-bottom: 18.35%;
+    padding: 40px 10px 40px 10px;
+    text-align: center;
+    border: 3px solid black;
+    border-radius: 20px;
+    max-width: 400px;
+    background-color: lightgray;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+h2 {
+    background-color: #20426b;
+    color: rgb(230, 196, 46);
+    border: 0px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+}
