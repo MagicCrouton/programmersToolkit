@@ -33,3 +33,11 @@ li {
     margin-right: 10px;
 }
 
+.sticky {
+    position: fixed;
+    top: 0;
+  }
+
+  #space {
+    height: 120px
+  }
