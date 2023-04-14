@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const CodeBlock = require('./CodeBlock')
-const {newCode, editCode} = require('../utils/aiFetch')
 
 const projectSchema = new Schema({
     projectName: {
@@ -26,18 +25,6 @@ const projectSchema = new Schema({
     }]
 })
 
-projectSchema.methods.newCode= async function (payload) {
-  let firstCode = await newCode(payload)
-  this.iterations.push(firstCode)
-}
-
-
-projectSchema.methods.editCode = async function (target, payload) {
-    let iteration= await editCode(target, payload)
-    this.iterations.push({
-        iteration
-    })
-}
 
 const Project = model('Project', projectSchema)
 

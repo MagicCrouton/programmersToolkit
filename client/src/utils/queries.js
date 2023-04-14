@@ -39,9 +39,9 @@ query me {
   }
 }
 `
-export const QUERY_PROJECTMAIN = gql`
-query Projects {
-  projects {
+export const QUERY_SINGLE_PROJECT = gql`
+query ($projectId: ID!) {
+  project(projectId: $projectId) {
     _id
     projectName
     initialCode
