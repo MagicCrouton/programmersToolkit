@@ -5,6 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
@@ -24,6 +25,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MagicCrouton/programmersToolkit.git"
+  },
+  "engines": {
+    "node": "18.14.2"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
