@@ -15,15 +15,21 @@ const resolvers = {
       return User.findOne({_id: context.user._id}).populate("projects")
     },
     projects: async () => {
-      return Project.find();
+      console.log(context.project._id)
+      return Project.find().populate("iterations");
     },
-    project: async (parent, args, context) => {
-      return Project.findOne({_id: context.project._id }).populate("iterations");
+    project: async (parent, { projectId }) => {
+      // console.log(projectId)
+      return Project.findOne({_id: projectId}).populate("iterations");
     },
     
   },
 
   Mutation: {
+    findSingleProject: async (parent, { projectId }) => {
+      // console.log(projectId)
+      return Project.findOne({_id: projectId}).populate("iterations");
+    },    
     newProject: async(parent, {initialCode, projectName, projectDescription}, context) => {
       if (context.user) {
 
