@@ -34,13 +34,29 @@ export const SAVE_PROJECT = gql`
     }
 `;
 
+// export const EDIT_PROJECT = gql`
+//     mutation editProject($projectId: ID!, $currentCode: String!, $prompt: String!) {
+//       editProject(projectID: $projectId, currentCode: $currentCode, prompt: $prompt) {
+//         _id
+//       }
+//     }
+// `
 export const EDIT_PROJECT = gql`
-    mutation editProject($projectId: ID!, $currentCode: String!, $prompt: String!) {
-      editProject(projectID: $projectId, currentCode: $currentCode, prompt: $prompt) {
-        _id
-      }
+mutation EditProject($projectId: ID!, $currentCode: String!, $prompt: String!) {
+  editProject(projectID: $projectId, currentCode: $currentCode, prompt: $prompt) {
+    _id
+    projectName
+    initialCode
+    projectDescription
+    createdAt
+    iterations {
+      _id
+      block
     }
-`
+  }
+}
+`;
+
 
 
 export const NEW_PROJECT = gql`

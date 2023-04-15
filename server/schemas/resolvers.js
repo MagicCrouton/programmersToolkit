@@ -72,8 +72,11 @@ const resolvers = {
           {$addToSet: {iterations: nextBlock}}
         )
 
-        return nextBlock._id
-      }
+      //   return nextBlock._id
+      // }
+      const updatedProject = await Project.findById(projectID).populate('iterations')
+    return updatedProject
+  }
       throw new AuthenticationError("You need to be logged in!");
     },
     saveProject: async(parent, {currentCode, projectID}, context) => {

@@ -88,7 +88,9 @@ return (
           
         </Form.Group>
         <br></br>
-      <button onClick={handleEdit}>Edit Project</button>
+      {/* <button onClick={handleEdit}>Edit Project</button> */}
+      <button onClick={() => handleEdit(projectData._Id)}>Edit Project</button>
+
     </div>
     
   </div>
