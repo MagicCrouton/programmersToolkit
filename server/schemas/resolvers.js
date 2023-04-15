@@ -79,17 +79,15 @@ const resolvers = {
   }
       throw new AuthenticationError("You need to be logged in!");
     },
-    saveProject: async(parent, {currentCode, projectID}, context) => {
+    saveProject: async(parent, {currentCode, blockId}, context) => {
       if (context.user) {
 
-        // const newProjectUser = await User.findById(context.user._id);
-        let nextBlock = await CodeBlock.create({block: `${currentCode}`})
-        let updatedProject = await Project.findOneAndUpdate(
-          {_id: projectID},
-          {$addToSet: {iterations: nextBlock}}
+        let update = await CodeBlock.findOneAndUpdate(
+          {_id: blockId},
+          {block: currentCode}
         )
 
-        return nextBlock._id
+        return update
       }
       throw new AuthenticationError("You need to be logged in!");
     },
