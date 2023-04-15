@@ -34,6 +34,7 @@
     "http-proxy-middleware": "^2.0.6",
     "openai": "^3.2.1",
     "os-browserify": "^0.3.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "react-syntax-highlighter": "^15.5.0"
   }
 }
