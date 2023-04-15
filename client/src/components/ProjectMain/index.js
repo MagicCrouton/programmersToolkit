@@ -19,7 +19,7 @@ const ProjectMain = ({}) => {
     }); 
     const projectData = data?.project || {}
 
-    //    ADDING EDIT, SAVE BUTTONS
+    //    ADDING EDIT BUTTON
 
     const [currentCode, setCurrentCode] = useState({currentCode: ''});
     const [prompt, setPrompt] = useState({prompt: ''});
@@ -34,6 +34,9 @@ const ProjectMain = ({}) => {
         }
       })
     }
+    const handlePromptChange = (event) => {
+      setPrompt(event.target.value);
+    };
     // console.log(data.project.iterations[0].block)
     if (loading) {
         return <h3>Still Loading, please wait</h3>;
@@ -73,17 +76,18 @@ return (
     </div>
     <div>
     <Form.Group>
-          <Form.Label htmlFor='prompt'>What would you like to Edit?</Form.Label>
+          <Form.Label htmlFor='prompt'>What Would You Like to Edit?</Form.Label>
           <Form.Control
             type='text'
             placeholder='add/edit your code'
             name='prompt'
-            onChange={handleEdit}
+            onChange={handlePromptChange}
             value={prompt.prompt}
             required
           />
-          {/* <Form.Control.Feedback type='invalid'>Starting prompt is required!</Form.Control.Feedback> */}
+          
         </Form.Group>
+        <br></br>
       <button onClick={handleEdit}>Edit Project</button>
     </div>
     
