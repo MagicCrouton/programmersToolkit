@@ -23,16 +23,20 @@ const ProjectMain = ({}) => {
 
     const [currentCode, setCurrentCode] = useState({currentCode: ''});
     const [prompt, setPrompt] = useState({prompt: ''});
+    const [displayCode, setDisplayCode] = useState({});
     const [editProject] = useMutation(EDIT_PROJECT)
 
-    const handleEdit = async (projectId) => {
+    const handleEdit = async () => {
+      console.log(data.project.iterations)
+      console.log(prompt)
       await editProject({
         variables: {
-          projectId: projectId,
-          currentCode: currentCode.currentCode,
-          prompt: prompt.prompt
+          projectId: data.project._id,
+          currentCode: data.project.iterations[0].block,
+          prompt: prompt
         }
       })
+      window.location.reload();
     }
     const handlePromptChange = (event) => {
       setPrompt(event.target.value);
@@ -42,40 +46,28 @@ const ProjectMain = ({}) => {
         return <h3>Still Loading, please wait</h3>;
 
 }
-// return (
-//   <div>
-//     <h3 className="text-primary">View/Edit Your Project</h3>
-//     <div className="flex-row justify-space-between my-4">
-//       <p>{`${data.project.iterations[0].block}`}</p>
-//     {/* {projectData.iterations.map((CodeBlock) => (
-//         <div key={CodeBlock._id} className="col-12 col-xl-6">
-//           <div className="card mb-3">
-//             <h4 className="card-header bg-dark text-light p-2 m-0">
-//               {CodeBlock._id} <br />
-//             </h4>
-//             <div className="card-body bg-light p-2">
-//               <CodeBlock block={CodeBlock.block} />
-//             </div>
-//           </div>
-//         </div>
-//       ))} */}
-//     </div>
-//   </div>
-// );
 
-//       }
-// export default ProjectMain;
 return (
   <div>
     <h3 className="text-primary">View/Edit Your Project</h3>
-    <div className="flex-row justify-space-between my-4">
-      <SyntaxHighlighter language="javascript" style={materialOceanic}>
-        {data.project.iterations[0].block}
-      </SyntaxHighlighter>
-      
+    <div>
+          <div className="flex-row justify-space-between my-4">
+          <SyntaxHighlighter language="javascript" style={materialOceanic}>
+            {projectData.iterations[projectData.iterations.length - 1].block}
+          </SyntaxHighlighter>
+        </div>
     </div>
     <div>
     <Form.Group>
+          {/* <Form.Label htmlFor='prompt'>Current Iteration</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder= {data.project.iterations[0].block}
+            name='currentCode'
+            onChange={handlePromptChange}
+            value={currentCode.currentCode}
+            required
+          /> */}
           <Form.Label htmlFor='prompt'>What Would You Like to Edit?</Form.Label>
           <Form.Control
             type='text'
@@ -89,7 +81,7 @@ return (
         </Form.Group>
         <br></br>
       {/* <button onClick={handleEdit}>Edit Project</button> */}
-      <button onClick={() => handleEdit(projectData._Id)}>Edit Project</button>
+      <button onClick={() => handleEdit(data)}>Edit Project</button>
 
     </div>
     
