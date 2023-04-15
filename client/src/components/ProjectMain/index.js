@@ -6,69 +6,74 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SINGLE_PROJECT } from '../../utils/queries';
 import { EDIT_PROJECT, SAVE_PROJECT } from '../../utils/mutations';
 // import react-syntax
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { materialOceanic } from 'react-syntax-highlighter/dist/esm/styles/prism';
+// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// import { materialOceanic } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+import Editor from 'react-simple-code-editor'
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/themes/prism.css'; //Example style, you can use another
+
 import { Form, Button} from 'react-bootstrap';
+import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 
 
 const ProjectMain = ({}) => {
+  
     const {loading, data} = useQuery(QUERY_SINGLE_PROJECT, {
       variables: {
         projectId: `${localStorage.getItem('singleProjectView')}`
       }
-    }); 
+    })
+
+    // setCurrentCode(data.project.iterations[projectData.iterations.length - 1].block)
     const projectData = data?.project || {}
-
-    //    ADDING EDIT BUTTON
-
-    const [currentCode, setCurrentCode] = useState({currentCode: ''});
     const [prompt, setPrompt] = useState({prompt: ''});
-    const [displayCode, setDisplayCode] = useState({});
-    const [editProject] = useMutation(EDIT_PROJECT)
+    const [editProject] = useMutation(EDIT_PROJECT);
+    const [currentCode, setCurrentCode] = useState(``);
+    const [firstLoad, setLoad] = useState(true)
 
-    const handleEdit = async () => {
-      console.log(data.project.iterations)
-      console.log(prompt)
-      await editProject({
-        variables: {
-          projectId: data.project._id,
-          currentCode: data.project.iterations[0].block,
-          prompt: prompt
-        }
-      })
-      window.location.reload();
+    const updateCode = (code) => {
+      setLoad(false);
+      setCurrentCode(code);
     }
     const handlePromptChange = (event) => {
       setPrompt(event.target.value);
     };
     // console.log(data.project.iterations[0].block)
-    if (loading) {
-        return <h3>Still Loading, please wait</h3>;
 
-}
+    const handleEdit = async () => {
+      await editProject({
+        variables: {
+          projectId: data.project._id,
+          currentCode: currentCode,
+          prompt: prompt
+        }
+      })
+      window.location.reload();
+    }
+// setCurrentCode(projectData.iterations[projectData.iterations.length - 1].block);
+
+    if (loading) { return <h3>Still Loading, please wait</h3> }
+
 
 return (
   <div>
     <h3 className="text-primary">View/Edit Your Project</h3>
+    <Editor
+            value= {firstLoad === true ? data.project.iterations[projectData.iterations.length - 1].block : currentCode}
+            onValueChange={code => updateCode(code)}
+            highlight={code => highlight(code, languages.js)}
+            padding={10}
+            style={{
+              fontFamily: '"Fira code", "Fira Mono", monospace',
+              fontSize: 12
+            }}
+     />
     <div>
-          <div className="flex-row justify-space-between my-4">
-          <SyntaxHighlighter language="javascript" style={materialOceanic}>
-            {projectData.iterations[projectData.iterations.length - 1].block}
-          </SyntaxHighlighter>
-        </div>
-    </div>
-    <div>
-    <Form.Group>
-          {/* <Form.Label htmlFor='prompt'>Current Iteration</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder= {data.project.iterations[0].block}
-            name='currentCode'
-            onChange={handlePromptChange}
-            value={currentCode.currentCode}
-            required
-          /> */}
-          <Form.Label htmlFor='prompt'>What Would You Like to Edit?</Form.Label>
+    <Form.Group className='d-flex flex-column'>
+          <Form.Label htmlFor='prompt'>What would you like changed?</Form.Label>
           <Form.Control
             type='text'
             placeholder='add/edit your code'
@@ -81,10 +86,10 @@ return (
         </Form.Group>
         <br></br>
       {/* <button onClick={handleEdit}>Edit Project</button> */}
-      <button onClick={() => handleEdit(data)}>Edit Project</button>
+      <button onClick={() => handleEdit(data)}>Iterate</button>
 
     </div>
-    
+  <script src='./ProjectMain.js'></script>
   </div>
   
 );
