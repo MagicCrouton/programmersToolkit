@@ -35,7 +35,10 @@ const resolvers = {
 
         // const newProjectUser = await User.findById(context.user._id);
         const firstFetch = await newCode(initialCode)
-        const firstCodeBlock = await CodeBlock.create({block: `${firstFetch}`})
+        const firstCodeBlock = await CodeBlock.create({
+          block: `${firstFetch}`,
+          instructions: `${initialCode}`
+        })
         const newProject = await Project.create({initialCode, projectName, projectDescription});
         // console.log(newProject._id)
         // newProject.iterations.push(firstCodeBlock)
@@ -63,10 +66,12 @@ const resolvers = {
     },
     editProject: async(parent, {currentCode, projectID, prompt}, context) => {
       if (context.user) {
-
         // const newProjectUser = await User.findById(context.user._id);
         let iteration = await editCode(`${currentCode}`, prompt)
-        let nextBlock = await CodeBlock.create({block: `${iteration}`})
+        let nextBlock = await CodeBlock.create({
+          block: `${iteration}`,
+          instructions:`${prompt}`  
+        })
         await Project.findOneAndUpdate(
           {_id: projectID},
           {$addToSet: {iterations: nextBlock}}

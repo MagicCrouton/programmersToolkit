@@ -8,7 +8,7 @@ db.once('open', async () => {
     await Project.deleteMany({});
     await CodeBlock.deleteMany({});
 
-    await User.create(userSeeds);
+    // await User.create(userSeeds);
 
   } catch (err) {
     console.error(err);

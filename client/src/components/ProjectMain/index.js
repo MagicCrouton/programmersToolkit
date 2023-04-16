@@ -28,7 +28,7 @@ const ProjectMain = ({}) => {
     // setCurrentCode(data.project.iterations[projectData.iterations.length - 1].block)
     const projectData = data?.project || {}
 
-    const [prompt, setPrompt] = useState({prompt: ''});
+    const [prompt, setPrompt] = useState('');
     const [editProject] = useMutation(EDIT_PROJECT);
     const [saveProject] = useMutation(SAVE_PROJECT);
     const [currentCode, setCurrentCode] = useState(``);
@@ -44,13 +44,18 @@ const ProjectMain = ({}) => {
     //   codeSet.codeArray[i] = iterationSet[i].block
     // }
 
-    console.log(currentBlock)
     const updateCode = (code) => {
       setLoad(false);
       setCurrentCode(code);
     }
     const handlePromptChange = (event) => {
+      if (firstLoad === true) {
+        setCurrentCode(data.project.iterations[projectData.iterations.length - 1].block)
+        setLoad(false)
+      }
       setPrompt(event.target.value);
+      console.log(prompt)
+      console.log(currentCode)
     };
 
     const handleEdit = async () => {
@@ -64,11 +69,11 @@ const ProjectMain = ({}) => {
       window.location.reload();
     }
 
-    const handleBlockNav = async (n) => {
-      setCurrentBlock(currentBlock + n)
-      setCurrentCode(codeSet[(codeSet.codeLength-1) - n])
-      console.log(currentCode)
-    } 
+    // const handleBlockNav = async (n) => {
+    //   setCurrentBlock(currentBlock + n)
+    //   setCurrentCode(codeSet[(codeSet.codeLength-1) - n])
+    //   console.log(currentCode)
+    // } 
     
     const handleSave = async () => {
       await saveProject({
@@ -84,10 +89,10 @@ const ProjectMain = ({}) => {
 
 
 return (
-  <div>
+  <div className='d-flex flex-row'>
+  <div className='col-10'>
     <h3 className="text-primary">View/Edit Your Project</h3>
-    <Editor
-            key={data.project.iterations[projectData.iterations.length - 1].block._id}
+    <Editor id='test'
             value= {firstLoad === true ? data.project.iterations[projectData.iterations.length - 1].block : currentCode}
             onValueChange={code => updateCode(code)}
             highlight={code => highlight(code, languages.js)}
@@ -106,26 +111,38 @@ return (
             placeholder='type what you want changed'
             name='prompt'
             onChange={handlePromptChange}
-            value={prompt.prompt}
+            value={prompt}
             required
           />
           
         </Form.Group>
         <br></br>
       {/* <button onClick={handleEdit}>Edit Project</button> */}
-      <div className='col-9 flex-row justify-content-evenly'>
+      <div className='flex-row justify-content-evenly'>
       <div>
       <button onClick={() => handleEdit(data)}>Iterate</button>
       <button onClick={() => handleSave(data)}>Save</button>
       </div>
-      <div className='col-9 d-flex'>
+      {/* <div className='col-9 d-flex'>
       <button className={currentBlock >= (data.project.iterations.length) ? 'd-none' : 'btn-primary'} onClick={() => handleBlockNav(+1)}>back</button>
       <button className={currentBlock <= 0 ? 'd-none' : 'btn-primary'} onClick={() => handleBlockNav(-1)}>forward</button>
-      </div>
+      </div> */}
     </div>
     </div>
   <script src='./ProjectMain.js'></script>
   </div>
+
+
+  <div className="card col-2 overflow-auto">
+  <ul className="list-group">
+    <header>iterations</header>
+    <br></br>
+    <li className="list-group-item">An item</li>
+    <li className="list-group-item">A second item</li>
+    <li className="list-group-item">A third item</li>
+  </ul>
+</div>
+</div>
   
 );
 };
