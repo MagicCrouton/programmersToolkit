@@ -4,6 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from '@apo
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // needed for need to import setContext for authLink
 import { setContext } from '@apollo/client/link/context'
+import './App.css';
 
 import Home from './pages/Home';
 import Header from './components/Header';
