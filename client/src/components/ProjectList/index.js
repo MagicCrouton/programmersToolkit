@@ -5,7 +5,7 @@ import { QUERY_ME, QUERY_PROJECTMAIN } from '../../utils/queries';
 import { FIND_SINGLE_PROJECT, REMOVE_PROJECT } from '../../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 
-const ProjectList = ({ }) => {
+function ProjectList({handlePageChange}) {
 
     const {loading, data} = useQuery(QUERY_ME);
     // const {loadingView, viewdata} = useQuery(QUERY_PROJECTMAIN);
@@ -21,12 +21,12 @@ const ProjectList = ({ }) => {
             }
         })
 
-      window.location.assign('/projectList');
+      window.location.reload();
     }
 
     const handleView = async (projectId) => {
       window.localStorage.setItem('singleProjectView', projectId)
-      window.location.assign(`/projectMain`);
+      handlePageChange('SingleProjectView')
     }
 
   if (loading) {

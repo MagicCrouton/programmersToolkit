@@ -13,16 +13,19 @@ import AppNavBar from '../components/AppNavBar/Navbar';
 
 
 
-const Dashboard = () => {
+function Dashboard() {
 
   const [currentPage, setCurrentPage] = useState('ViewProjects');
   const handlePageChange = (page) => setCurrentPage(page);
   const renderPage = () => {
     if (currentPage === 'ViewProjects') {
-      return <ProjectList />;
+      return <ProjectList handlePageChange={handlePageChange} />;
     }
     if (currentPage === 'CreateNewProject') {
       return <NewProjectForm />;
+    }
+    if (currentPage === 'SingleProjectView') {
+      return <ProjectMain />;
     }
   };
 
@@ -33,7 +36,7 @@ const Dashboard = () => {
         <br></br>
         <div className='d-flex flex-row'>
           <div className='col-2'>
-        <AppNavBar />
+        <AppNavBar currentPage = {currentPage} handlePageChange={handlePageChange} />
           </div>
           <div className='col-10'>
         {renderPage()}

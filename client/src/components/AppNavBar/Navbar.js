@@ -7,8 +7,8 @@ import './Navbar.css'
 
 import Auth from '../../utils/auth';
 
-const AppNavBar = () => {
-  // set modal display state
+function AppNavBar({currentPage, handlePageChange}) {
+
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -22,18 +22,16 @@ const AppNavBar = () => {
               </Navbar.Brand>
             </div>
           </Link>
-          <Link to="/projectList">
+          <br></br>
+          <Link>
             <div className='hover'>
-              <Navbar.Brand>
-                View Projects
-              </Navbar.Brand>
+              <Nav.Link className='hover' onClick={()=>handlePageChange('ViewProjects')}>View Projects</Nav.Link>
             </div>
           </Link>
-          <Link to="/newproject">
+          <br></br>
+          <Link>
             <div className='hover'>
-              <Navbar.Brand>
-                Create Project
-              </Navbar.Brand>
+              <Nav.Link className='hover' onClick={()=>handlePageChange('CreateNewProject')}>Create Project</Nav.Link>
             </div>
           </Link>
           <Navbar.Collapse id='navbar'>
