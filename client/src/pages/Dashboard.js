@@ -29,6 +29,8 @@ const Dashboard = () => {
   return (
     <div>
         <h1>Welcome back, {AuthServices.getProfile().data.username}!</h1>
+        <br></br>
+        <br></br>
         <div className='d-flex flex-row'>
           <div className='col-2'>
         <AppNavBar />

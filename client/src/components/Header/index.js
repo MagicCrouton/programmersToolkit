@@ -8,12 +8,15 @@ const Header = () => {
   return (
     <div>
     <header>
-      <div id="tabs" class="sticky">
-        <ul>
-          <li id='title'>
+    <div id='title'>
             <h1>Programmer's ToolKit</h1>
-          </li>
-          <li id='login'>
+          </div>
+      <div id="tabs" class="">
+        <ul>
+          <li id='home'>
+          <Link to="/dashboard">
+            Dashboard
+          </Link>
           </li>
         </ul>
       </div>

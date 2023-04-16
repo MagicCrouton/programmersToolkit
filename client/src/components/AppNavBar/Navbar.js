@@ -25,7 +25,7 @@ const AppNavBar = () => {
           <Link to="/projectList">
             <div className='hover'>
               <Navbar.Brand>
-                View Project
+                View Projects
               </Navbar.Brand>
             </div>
           </Link>
