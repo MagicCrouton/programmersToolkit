@@ -1,7 +1,7 @@
 #loginControl {
     min-height: 30px;
     color: rgb(180, 177, 177);
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     border: 3px solid black;
     border-radius: 10px;
     text-align: center;

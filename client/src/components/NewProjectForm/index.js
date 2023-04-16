@@ -84,6 +84,8 @@ const NewProjectForm = () => {
           />
           <Form.Control.Feedback type='invalid'>Starting prompt is required!</Form.Control.Feedback>
         </Form.Group>
+        <br></br>
+        <br></br>
         <Button
           disabled={!(formState.projectName && formState.projectDescription && formState.initialCode)}
           type='submit'
