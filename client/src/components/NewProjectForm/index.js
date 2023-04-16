@@ -39,7 +39,7 @@ const NewProjectForm = () => {
   return (
     <>
       {/* This is needed for the validation functionality above */}
-      <Form onSubmit={handleFormSubmit}>
+      <Form onSubmit={handleFormSubmit} className='form-content'>
         <h1>Lets Start Your New Project {AuthService.getProfile().data.username}</h1>
         
         <Form.Group>
