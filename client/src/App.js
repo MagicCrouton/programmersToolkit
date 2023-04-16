@@ -4,6 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from '@apo
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // needed for need to import setContext for authLink
 import { setContext } from '@apollo/client/link/context'
+import './App.css';
 
 import Home from './pages/Home';
 import Header from './components/Header';
@@ -12,7 +13,7 @@ import LoginForm from './components/Login';
 import SignupForm from './components/Signup';
 import NewProjectForm from './components/NewProjectForm';
 import ProjectList from './components/ProjectList';
-import ProjectMain from './components/ProjectMain'
+import ProjectMain from './components/ProjectMain';
 import Dashboard from './pages/Dashboard';
 
 
@@ -43,12 +44,13 @@ const client = new ApolloClient({
 });
 
 function App() {
+
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="flex-column justify-flex-start min-vh-100">
+        <div id="content" className="">
           <Header />
-          <div className="container">
+          <div id="container-content" className="container">
             <Routes>
               <Route 
                 path="/" 
@@ -80,7 +82,10 @@ function App() {
               />    
             </Routes>
           </div>
-          <Footer />
+          <div id="footer-space"></div>
+          <div id="footer-content">
+              <Footer />
+          </div>
         </div>
       </Router>
     </ApolloProvider>
