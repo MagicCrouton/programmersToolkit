@@ -22,10 +22,10 @@ function Dashboard() {
       return <ProjectList handlePageChange={handlePageChange} />;
     }
     if (currentPage === 'CreateNewProject') {
-      return <NewProjectForm />;
+      return <NewProjectForm handlePageChange={handlePageChange} />;
     }
     if (currentPage === 'SingleProjectView') {
-      return <ProjectMain />;
+      return <ProjectMain handlePageChange={handlePageChange} />;
     }
   };
 

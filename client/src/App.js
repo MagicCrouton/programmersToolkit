@@ -68,18 +68,6 @@ function App() {
                 path="/login" 
                 element={<LoginForm />} 
               />
-              <Route 
-                path="/newproject" 
-                element={<NewProjectForm />} 
-              />    
-              <Route 
-                path="/projectList" 
-                element={<ProjectList />} 
-              />    
-              <Route 
-                path="/projectMain" 
-                element={<ProjectMain />} 
-              />    
             </Routes>
           </div>
           <div id="footer-space"></div>

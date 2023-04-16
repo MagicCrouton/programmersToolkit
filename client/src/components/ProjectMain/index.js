@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SINGLE_PROJECT } from '../../utils/queries';
 import { EDIT_PROJECT, SAVE_PROJECT } from '../../utils/mutations';
@@ -15,7 +15,7 @@ import { Form } from 'react-bootstrap';
 import timestamp from 'unix-timestamp'
 
 
-const ProjectMain = ({}) => {
+function ProjectMain({handlePageChange}) {
   
     const {loading, data} = useQuery(QUERY_SINGLE_PROJECT, {
       variables: {
@@ -30,15 +30,10 @@ const ProjectMain = ({}) => {
     const [editProject] = useMutation(EDIT_PROJECT);
     const [saveProject] = useMutation(SAVE_PROJECT);
     const [currentCode, setCurrentCode] = useState(``);
+    const [promptLabel, setPromptLabel] = useState('enter what you want to change with this code');
     const [firstLoad, setLoad] = useState(true);
 
-    // loads blocks into memory
-
-    // let iterationSet = projectData.iterations;
-    // codeSet.codeLength = iterationSet.length;
-    // for (let i=0; i < codeSet.codeLength; i++) {
-    //   codeSet.codeArray[i] = iterationSet[i].block
-    // }
+  
 
     const updateCode = (code) => {
       setLoad(false);
@@ -52,24 +47,22 @@ const ProjectMain = ({}) => {
       setPrompt(event.target.value);
     };
 
-    const handleEdit = async () => {
+    const handleEdit = async (id) => {
+      let button = document.getElementById(`${id}`);
+      button.innerHTML = '<i class="fa fa-spinner fa-spin-2x"></i> Loading...';
+      button.disabled = true;
+      button.onclick = null;
       await editProject({
         variables: {
-          projectId: data.project._id,
+          projectId: projectData._id,
           currentCode: currentCode,
           prompt: prompt
         }
       })
-      // console.log(prompt)
-      // console.log(currentCode)
-      window.location.reload();
+      handlePageChange('')
+      handlePageChange('SingleProjectView')
     }
 
-    // const handleBlockNav = async (n) => {
-    //   setCurrentBlock(currentBlock + n)
-    //   setCurrentCode(codeSet[(codeSet.codeLength-1) - n])
-    //   console.log(currentCode)
-    // } 
     
     const handleSave = async () => {
       await saveProject({
@@ -78,7 +71,8 @@ const ProjectMain = ({}) => {
           currentCode: currentCode,
         }
       })
-      window.location.reload();
+      handlePageChange('')
+      handlePageChange('SingleProjectView')
     }
 
     if (loading) { return <h3>Still Loading, please wait</h3> }
@@ -102,10 +96,10 @@ return (
     <div>
       <br></br>
     <Form.Group className='d-flex flex-column justify-content-center'>
-          <Form.Label htmlFor='prompt'>What would you like changed?</Form.Label>
+          <Form.Label htmlFor='prompt'>{promptLabel}</Form.Label>
           <Form.Control
             type='text'
-            placeholder='type what you want changed'
+            placeholder='do it'
             name='prompt'
             onChange={handlePromptChange}
             value={prompt}
@@ -117,15 +111,15 @@ return (
       {/* <button onClick={handleEdit}>Edit Project</button> */}
       <div className='flex-row justify-content-evenly'>
       <div>
-      <button onClick={() => handleEdit(data)}>Iterate</button>
-      <button onClick={() => handleSave(data)}>Save</button>
+      <button id='iterateButton' onClick={() => handleEdit(`iterateButton`)}>Iterate</button>
+      <button id='saveButton' onClick={() => handleSave('saveButton')}>Save</button>
       </div>
     </div>
     </div>
   </div>
   <div className='col-1'></div>
-  <div className="col-2 h-50 d-inline-block overflow-auto">
-    <h6 className='d-flex justify-content-center'>previous Iterations</h6>
+  <div className="col-2 h-50 d-inline-block">
+    <h6>previous Iterations</h6>
     <br></br>
 {projectData.iterations.map((iteration) => (
         <div key={iteration._id} className="col-sm-4">
