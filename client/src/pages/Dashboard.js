@@ -1,25 +1,35 @@
 import React from 'react';
+import AuthServices from '../utils/auth';
+
 import './dashboard.css'
+import ProjectList from '../components/ProjectList';
+
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
-
 import { GET_ME, QUERY_ME } from '../utils/queries';
 
-import AuthServices from '../utils/auth';
 
 
 
 const Dashboard = () => {
-  const { loading: loadingMe, data: meData } = useQuery(GET_ME);
-  const { loading: loadingProjects, data: projectsData } = useQuery(QUERY_ME);
 
-  if (loadingMe || loadingProjects) {
-    return <p>Loading...</p>;
-  }
-
-  const me = meData?.me;
-  const projects = projectsData?.projects;
-
+  const [currentPage, setCurrentPage] = useState('ViewProjects');
+  const handlePageChange = (page) => setCurrentPage(page);
+  const renderPage = () => {
+    if (currentPage === 'ViewProjects') {
+      return <Home handlePageChange={handlePageChange} />;
+    }
+    if (currentPage === 'CreateNewProject') {
+      return <About />;
+    }
+    if (currentPage === 'Portfolio') {
+      return <Portfolio />;
+    }
+    if (currentPage === 'Resume') {
+      return <Resume />;
+    }
+    return <Contact />; 
+  };
 
   return (
     <div>
@@ -32,12 +42,7 @@ const Dashboard = () => {
         <button onClick={() => {window.location.assign('/newproject')} }>
            Create a New Project
         </button>
-      <ul>
-      {projects && projects.map((project) => (
-  <li key={project._id}>{project.projectName}</li>
-))}
-
-      </ul>
+        <ProjectList />
     </div>
   );
 };
