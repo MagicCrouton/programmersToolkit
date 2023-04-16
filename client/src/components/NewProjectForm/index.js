@@ -22,6 +22,7 @@ function NewProjectForm({handlePageChange}) {
           initialCode: formState.initialCode
         }
       });
+
       handlePageChange('ViewProjects')
   };
 

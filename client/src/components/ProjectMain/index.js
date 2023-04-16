@@ -47,10 +47,14 @@ function ProjectMain({handlePageChange}) {
       setPrompt(event.target.value);
     };
 
-    const handleEdit = async () => {
+    const handleEdit = async (id) => {
+      let button = document.getElementById(`${id}`);
+      button.innerHTML = '<i class="fa fa-spinner fa-spin-2x"></i> Loading...';
+      button.disabled = true;
+      button.onclick = null;
       await editProject({
         variables: {
-          projectId: data.project._id,
+          projectId: projectData._id,
           currentCode: currentCode,
           prompt: prompt
         }
@@ -107,8 +111,8 @@ return (
       {/* <button onClick={handleEdit}>Edit Project</button> */}
       <div className='flex-row justify-content-evenly'>
       <div>
-      <button onClick={() => handleEdit(data)}>Iterate</button>
-      <button onClick={() => handleSave(data)}>Save</button>
+      <button id='iterateButton' onClick={() => handleEdit(`iterateButton`)}>Iterate</button>
+      <button id='saveButton' onClick={() => handleSave('saveButton')}>Save</button>
       </div>
     </div>
     </div>
