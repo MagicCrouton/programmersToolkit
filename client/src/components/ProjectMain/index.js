@@ -1,20 +1,18 @@
 import React, { useState }  from 'react';
-import Bootstrap from 'bootstrap'
-
-import { QUERY_PROJECTMAIN } from '../../utils/queries';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SINGLE_PROJECT } from '../../utils/queries';
 import { EDIT_PROJECT, SAVE_PROJECT } from '../../utils/mutations';
 // import react-syntax
 // import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-// import { materialOceanic } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { materialOceanic } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import Editor from 'react-simple-code-editor'
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css'; //Example style, you can use another
-import { Form, Button, ButtonGroup, ButtonToolbar} from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import timestamp from 'unix-timestamp'
 
 
 const ProjectMain = ({}) => {
@@ -32,9 +30,7 @@ const ProjectMain = ({}) => {
     const [editProject] = useMutation(EDIT_PROJECT);
     const [saveProject] = useMutation(SAVE_PROJECT);
     const [currentCode, setCurrentCode] = useState(``);
-    const [currentBlock, setCurrentBlock] = useState(0);
     const [firstLoad, setLoad] = useState(true);
-    const [codeSet, setCodeSet] = [{codeArray: [], codeLength: 0}]
 
     // loads blocks into memory
 
@@ -64,8 +60,8 @@ const ProjectMain = ({}) => {
           prompt: prompt
         }
       })
-      console.log(prompt)
-      console.log(currentCode)
+      // console.log(prompt)
+      // console.log(currentCode)
       window.location.reload();
     }
 
@@ -90,16 +86,17 @@ const ProjectMain = ({}) => {
 
 return (
   <div className='d-flex flex-row'>
-  <div className='col-10'>
+  <div className='col-1'></div>
+  <div className='col-8'>
     <h3 className="text-primary">View/Edit Your Project</h3>
-    <Editor id='test'
+    <br></br>
+    <Editor 
             value= {firstLoad === true ? data.project.iterations[projectData.iterations.length - 1].block : currentCode}
             onValueChange={code => updateCode(code)}
             highlight={code => highlight(code, languages.js)}
             padding={10}
             style={{
-              fontFamily: '"Fira code", "Fira Mono", monospace',
-              fontSize: 12
+              materialOceanic,
             }}
      />
     <div>
@@ -123,25 +120,24 @@ return (
       <button onClick={() => handleEdit(data)}>Iterate</button>
       <button onClick={() => handleSave(data)}>Save</button>
       </div>
-      {/* <div className='col-9 d-flex'>
-      <button className={currentBlock >= (data.project.iterations.length) ? 'd-none' : 'btn-primary'} onClick={() => handleBlockNav(+1)}>back</button>
-      <button className={currentBlock <= 0 ? 'd-none' : 'btn-primary'} onClick={() => handleBlockNav(-1)}>forward</button>
-      </div> */}
     </div>
     </div>
-  <script src='./ProjectMain.js'></script>
   </div>
-
-
-  <div className="card col-2 overflow-auto">
-  <ul className="list-group">
-    <header>iterations</header>
+  <div className='col-1'></div>
+  <div className="col-2 h-50 d-inline-block overflow-auto">
+    <h6 className='d-flex justify-content-center'>previous Iterations</h6>
     <br></br>
-    <li className="list-group-item">An item</li>
-    <li className="list-group-item">A second item</li>
-    <li className="list-group-item">A third item</li>
-  </ul>
-</div>
+{projectData.iterations.map((iteration) => (
+        <div key={iteration._id} className="col-sm-4">
+            <button style={{materialOceanic, fontSize: 10}} onClick={() => updateCode(iteration.block)}>
+              <span>{iteration.instruction}{iteration._id},</span>
+              <br></br><br></br>
+              <span>Created: {`${timestamp.toDate(Math.floor(iteration.createdAt)/1000)}`}</span>
+            </button>
+        </div>
+))}
+    </div>
+
 </div>
   
 );

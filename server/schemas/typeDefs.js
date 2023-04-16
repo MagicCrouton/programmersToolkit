@@ -20,7 +20,9 @@ const typeDefs = gql`
 
   type CodeBlock {
     _id: ID
+    instruction: String
     block: String
+    createdAt: String
   }
 
   type Auth {
