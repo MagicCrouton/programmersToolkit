@@ -1,4 +1,9 @@
-### <img src="./client/public/pro-toolkit-ltransparent.png" width="400" height="250">
+
+# </> Programmer's Toolkit </>
+
+<br>
+
+<img src="./client/public/toolkit-scrnshot.png" width="400" height="300">
 
 
 ## Table of Contents
@@ -13,37 +18,39 @@
 
 ## Description
  The Programmer's Toolkit was created to help developers, engineers, and the curious create, fix, and update their code using ChatGPT. 
-- Ask ChatGPT your question and store your code in your "toolkit".
-- Revisit previous ChatGPT searches as needed.
+* Ask ChatGPT your question and store your code in your "toolkit".
+* Revisit previous ChatGPT searches as needed.
                 
 <br>
 
 ## Links
-<!-- need to add deployed site url here --> Deployed Site
+<a href="https://programmerstoolkit.herokuapp.com/"> Deployed Site </a>
 <br>
 <a href="https://github.com/MagicCrouton/programmersToolkit"> GitHub </a> 
 
 <br>
 
 ## Credits
-- Chat GPT
-- Open AI
+* Chat GPT
+* Open AI
 
 <br>
 
 ## Licenses
-- ISC
+* ISC
 
 <br>
 
 ## Contributors
-- Konny Ho
+* Konny Ho
 <br>
-- Eugene Park
+* Eugene Park
 <br>
-- Tim Aspesberro
+* Tim Aspesberro
 <br>
-- Mark Green
+* Mark Green
+
+<br>
 
 
 
