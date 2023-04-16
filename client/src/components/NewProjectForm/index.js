@@ -22,7 +22,7 @@ function NewProjectForm({handlePageChange}) {
           initialCode: formState.initialCode
         }
       });
-
+      handlePageChange('')
       handlePageChange('ViewProjects')
   };
 
@@ -36,7 +36,7 @@ function NewProjectForm({handlePageChange}) {
       {/* This is needed for the validation functionality above */}
 
       <Form onSubmit={handleFormSubmit}>
-      <div class="page-content">
+      <div className="page-content">
         <div id="form-content">
         <h1>Lets Start Your New Project {AuthService.getProfile().data.username}</h1>
         
@@ -78,6 +78,7 @@ function NewProjectForm({handlePageChange}) {
           />
           <Form.Control.Feedback type='invalid'>Starting prompt is required!</Form.Control.Feedback>
         </Form.Group>
+        <br></br><br></br>
         <Button
           disabled={!(formState.projectName && formState.projectDescription && formState.initialCode)}
           type='submit'

@@ -21,7 +21,7 @@ function ProjectList({handlePageChange}) {
             }
         })
 
-      window.location.reload();
+      handlePageChange('ViewProjects');
     }
 
     const handleView = async (projectId) => {
@@ -34,7 +34,7 @@ function ProjectList({handlePageChange}) {
   }
 
   return (
-    <div class="projectlist-content">
+    <div className="projectlist-content">
       <div>
         <h3 className="text-primary">Your Projects</h3>
       </div>
