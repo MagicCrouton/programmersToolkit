@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Form, Button, Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './signup.css';
 // import { createUser } from '../utils/API';
 import AuthService from '../../utils/auth';
@@ -95,12 +96,16 @@ const SignupForm = () => {
           />
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
         </Form.Group>
+        <br></br>
         <Button
           disabled={!(userFormData.username && userFormData.email && userFormData.password)}
           type='submit'
           variant='success'>
           Submit
         </Button>
+        <Link to="/login">
+              <Button variant="primary">To Login</Button>
+      </Link>
         {/* {error && <div>Sign up failed</div>} */}
       </Form>
     </>
