@@ -7,7 +7,7 @@ import AuthService from "../../utils/auth"
 import './newProject.css'
 
 
-const NewProjectForm = () => {
+function NewProjectForm({handlePageChange}) {
   const [formState, setFormState] = useState({projectName: '', projectDescription: '', initialCode: '',});
 
   // Set up our mutation with an option to handle errors
@@ -15,10 +15,6 @@ const NewProjectForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    // console.log(AuthService.getProfile().data)
-    // On form submit, perform mutation and pass in form data object as arguments
-    // It is important that the object fields are match the defined parameters in `ADD_THOUGHT` mutation
-      // const { data } = 
       await newProject({
         variables: {
           projectName: formState.projectName,
@@ -26,10 +22,7 @@ const NewProjectForm = () => {
           initialCode: formState.initialCode
         }
       });
-      // console.log(data)
-      // window.location.reload();
-      window.location.assign('/projectList');
-
+      handlePageChange('ViewProjects')
   };
 
   const handleChange = (event) => {

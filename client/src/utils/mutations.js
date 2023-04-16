@@ -121,7 +121,9 @@ export const FIND_SINGLE_PROJECT = gql`
       createdAt
       iterations {
         _id
+        instruction
         block
+        createdAt
       }
     }
   }
