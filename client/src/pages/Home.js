@@ -10,7 +10,6 @@ import { Card, Button } from 'react-bootstrap';
 
 const Home = () => {
 
-  const [loginState, setLoginState] = useState(false);
   console.log(AuthServices.loggedIn())
   const RenderButton = () => {
     if (AuthServices.loggedIn() === true) {
