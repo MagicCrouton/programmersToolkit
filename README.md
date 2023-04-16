@@ -1,4 +1,9 @@
-### <img src="./client/public/pro-toolkit-ltransparent.png" width="400" height="250">
+
+# </> Programmer's Toolkit </>
+
+<br>
+
+<img src="./client/public/toolkit-scrnshot.png" width="400" height="300">
 
 
 ## Table of Contents
@@ -19,7 +24,7 @@
 <br>
 
 ## Links
-<!-- need to add deployed site url here --> Deployed Site
+<a href="https://programmerstoolkit.herokuapp.com/"> Deployed Site </a>
 <br>
 <a href="https://github.com/MagicCrouton/programmersToolkit"> GitHub </a> 
 
@@ -44,6 +49,8 @@
 * Tim Aspesberro
 <br>
 * Mark Green
+
+<br>
 
 
 
