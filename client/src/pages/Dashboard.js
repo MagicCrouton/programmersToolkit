@@ -29,9 +29,13 @@ const Dashboard = () => {
   return (
     <div>
         <h1>Welcome back, {AuthServices.getProfile().data.username}!</h1>
-        <div>
+        <div className='d-flex flex-row'>
+          <div className='col-2'>
         <AppNavBar />
+          </div>
+          <div className='col-10'>
         {renderPage()}
+          </div>
         </div>
     </div>
   );
