@@ -1,43 +1,42 @@
 import React from 'react';
-import './dashboard.css'
+import AuthServices from '../utils/auth';
+
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
-
 import { GET_ME, QUERY_ME } from '../utils/queries';
 
-import AuthServices from '../utils/auth';
+import './dashboard.css'
+import NewProjectForm from '../components/NewProjectForm';
+import ProjectList from '../components/ProjectList';
+import ProjectMain from '../components/ProjectMain';
+import AppNavBar from '../components/AppNavBar/Navbar';
 
 
 
 const Dashboard = () => {
-  const { loading: loadingMe, data: meData } = useQuery(GET_ME);
-  const { loading: loadingProjects, data: projectsData } = useQuery(QUERY_ME);
 
-  if (loadingMe || loadingProjects) {
-    return <p>Loading...</p>;
-  }
-
-  const me = meData?.me;
-  const projects = projectsData?.projects;
-
+  const [currentPage, setCurrentPage] = useState('ViewProjects');
+  const handlePageChange = (page) => setCurrentPage(page);
+  const renderPage = () => {
+    if (currentPage === 'ViewProjects') {
+      return <ProjectList />;
+    }
+    if (currentPage === 'CreateNewProject') {
+      return <NewProjectForm />;
+    }
+  };
 
   return (
     <div>
         <h1>Welcome back, {AuthServices.getProfile().data.username}!</h1>
-        <button onClick={() => {window.location.assign('/projectList')} }>
-           View/Edit Your Projects
-        </button>
-        <br></br>
-        <br></br>
-        <button onClick={() => {window.location.assign('/newproject')} }>
-           Create a New Project
-        </button>
-      <ul>
-      {projects && projects.map((project) => (
-  <li key={project._id}>{project.projectName}</li>
-))}
-
-      </ul>
+        <div className='d-flex flex-row'>
+          <div className='col-2'>
+        <AppNavBar />
+          </div>
+          <div className='col-10'>
+        {renderPage()}
+          </div>
+        </div>
     </div>
   );
 };

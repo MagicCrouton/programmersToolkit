@@ -13,7 +13,7 @@ import LoginForm from './components/Login';
 import SignupForm from './components/Signup';
 import NewProjectForm from './components/NewProjectForm';
 import ProjectList from './components/ProjectList';
-import ProjectMain from './components/ProjectMain'
+import ProjectMain from './components/ProjectMain';
 import Dashboard from './pages/Dashboard';
 
 
