@@ -89,7 +89,7 @@ const LoginForm = () => {
         </Button>
         <Link to="/signup">
               <Button variant="primary">Signup</Button>
-      </Link>
+        </Link>
       </Form>
       {error && <div>Login failed</div>}
     </>

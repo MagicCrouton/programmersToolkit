@@ -71,7 +71,6 @@ function ProjectMain({handlePageChange}) {
           currentCode: currentCode,
         }
       })
-      handlePageChange('')
       handlePageChange('SingleProjectView')
     }
 

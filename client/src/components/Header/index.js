@@ -11,7 +11,7 @@ const Header = () => {
     <div id='title'>
             <h1>Programmer's ToolKit</h1>
           </div>
-      <div id="tabs" class="">
+      <div id="tabs">
         <ul>
           <li id='home'>
           <Link to="/dashboard">
