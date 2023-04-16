@@ -1,3 +1,7 @@
-.container {
-    min-height: 65.1vh;
+#container-content {
+    min-height: 100vh;
+}
+
+#footer-space {
+    min-height: 100px;
 }
