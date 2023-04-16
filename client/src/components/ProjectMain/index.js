@@ -54,8 +54,6 @@ const ProjectMain = ({}) => {
         setLoad(false)
       }
       setPrompt(event.target.value);
-      console.log(prompt)
-      console.log(currentCode)
     };
 
     const handleEdit = async () => {
@@ -66,6 +64,8 @@ const ProjectMain = ({}) => {
           prompt: prompt
         }
       })
+      console.log(prompt)
+      console.log(currentCode)
       window.location.reload();
     }
 
