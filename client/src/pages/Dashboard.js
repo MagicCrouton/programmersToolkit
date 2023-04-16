@@ -1,17 +1,12 @@
 import React from 'react';
-import '../components/Dashboard/dashboard.css'
+import './dashboard.css'
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
-
-import LoginForm from '../components/Login';
-
-import SignupForm from '../components/Signup';
 
 import { GET_ME, QUERY_ME } from '../utils/queries';
 
 import AuthServices from '../utils/auth';
 
-import { Link } from 'react-router-dom';
 
 
 const Dashboard = () => {
