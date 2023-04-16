@@ -34,9 +34,11 @@ const ProjectList = ({ }) => {
   }
 
   return (
-    <div>
-      <h3 className="text-primary">Your Project</h3>
-      <div className="flex-row justify-space-between my-4">
+    <div class="projectlist-content">
+      <div>
+        <h3 className="text-primary">Your Projects</h3>
+      </div>
+      <div id="projects" className="flex-row justify-space-between my-4">
         {userData.projects.map((project) => (
             <div key={project._id} className="col-12 col-xl-6">
               <div className="card mb-3">

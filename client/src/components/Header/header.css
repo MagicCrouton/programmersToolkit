@@ -2,29 +2,39 @@
     background-color: #20426b;
     color: lightgray;
     display: flex;
-    justify-content: space-around;
+    justify-content:end;
     width: 100%;
-    margin-bottom: 40px;
+    max-height: 100px;
 }
 
 
 ul {
     list-style-type: none;
-    margin: 0;
+    margin-right: 40px;
+    margin-top: 30px;
     padding: 0;
 }
 
 li {
-    float: left;
-    min-height: 60px;
+    min-height: 50px;
+    min-width: 50px;
     margin-top: 10px;
-    margin-bottom: 10px;
+}
+
+li a {
+    background-color: rgb(181, 226, 247);
+    color: rgb(0, 0, 0);
+    border: 3px solid rgb(0, 0, 0);
+    border-radius: 15px;
+    padding: 5px;
 }
 
 
 #title {
     color: white;
-    left: 50vw;
+    position: absolute;
+    left: 40vw;
+    margin-top: 20px;
 }
 
 #login {
@@ -33,11 +43,12 @@ li {
     margin-right: 10px;
 }
 
-.sticky {
-    position: fixed;
-    top: 0;
-  }
+#space {
+    height: 50px
+}
 
-  #space {
-    height: 120px
-  }
+#home {
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    font-weight: bold;
+}
