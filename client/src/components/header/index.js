@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <div>
     <header>
-      <div id="tabs">
+      <div id="tabs" class="sticky">
         <ul>
           <li id='title'>
             <h1>Programmer's ToolKit</h1>
@@ -19,6 +19,7 @@ const Header = () => {
           </li>
         </ul>
       </div>
+      <div id="space"></div>
     </header>
     </div>
   );

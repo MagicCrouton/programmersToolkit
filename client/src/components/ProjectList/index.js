@@ -1,17 +1,19 @@
 import './ProjectList.css';
 
 import React from 'react';
-import { QUERY_ME } from '../../utils/queries';
-import { REMOVE_PROJECT } from '../../utils/mutations';
+import { QUERY_ME, QUERY_PROJECTMAIN } from '../../utils/queries';
+import { FIND_SINGLE_PROJECT, REMOVE_PROJECT } from '../../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 
 const ProjectList = ({ }) => {
 
     const {loading, data} = useQuery(QUERY_ME);
-
+    // const {loadingView, viewdata} = useQuery(QUERY_PROJECTMAIN);
+    // const [viewProject] = useMutation(FIND_SINGLE_PROJECT)
     const userData = data?.me || {}
 
     const [removeProject] = useMutation(REMOVE_PROJECT)
+    
     const handleDelete = async (projectId) => {
         await removeProject({
             variables: {
@@ -20,7 +22,11 @@ const ProjectList = ({ }) => {
         })
 
       window.location.assign('/projectList');
+    }
 
+    const handleView = async (projectId) => {
+      window.localStorage.setItem('singleProjectView', projectId)
+      window.location.assign(`/projectMain`);
     }
 
   if (loading) {
@@ -46,6 +52,9 @@ const ProjectList = ({ }) => {
               <p>{project.initialCode}</p>
               <button onClick={() => {handleDelete(project._id)} }>
                 Delete
+              </button>
+              <button onClick={() => {handleView(project._id)}  }>
+                                    View Project
               </button>
             </div>
               </div>

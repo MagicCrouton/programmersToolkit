@@ -15,12 +15,14 @@ const typeDefs = gql`
     initialCode: String
     projectDescription: String
     createdAt: String
-    iterations: [codeBlock]
+    iterations: [CodeBlock]
   }
 
-  type codeBlock {
+  type CodeBlock {
     _id: ID
+    instruction: String
     block: String
+    createdAt: String
   }
 
   type Auth {
@@ -31,7 +33,7 @@ const typeDefs = gql`
   type Query {
     users: [User]
     user(username: String!): User
-    projects: [Project]!
+    projects: [Project]
     project(projectId: ID!): Project
     me: User
   }
@@ -40,9 +42,10 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     newProject(initialCode: String!, projectName: String!, projectDescription: String!): Project
-    saveProject(projectID: ID!, currentCode: String!): Project
+    saveProject(blockId: ID!, currentCode: String!): Project
     editProject(projectID: ID!, currentCode: String!, prompt: String!): Project
     removeProjectfromUser(projectId: ID!): User
+    findSingleProject(projectId: ID!): Project
   }
 `;
 

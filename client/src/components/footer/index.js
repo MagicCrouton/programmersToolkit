@@ -5,14 +5,14 @@ function Footer () {
   return (
     <div>
       <footer>
-        <div class="footer-content">
-          <div class="header">
+        <div className="footer-content">
+          <div className="header">
             <h5>Created by the Pensive Garlic Bread crew for You.</h5>
           </div>
-          <div class="links">
+          <div className="links">
             <a href="https://github.com/MagicCrouton/programmersToolkit"><img src="https://logoeps.com/wp-content/uploads/2014/05/37318-github-logo-icon-vector-icon-vector-eps.png" alt="" height="30px" width="30px"></img></a>
           </div>
-          <div class="copywrite">
+          <div className="copywrite">
             <p>Copywrite © 2023</p>
           </div>
         </div>

@@ -12,7 +12,9 @@ import LoginForm from './components/Login';
 import SignupForm from './components/Signup';
 import NewProjectForm from './components/NewProjectForm';
 import ProjectList from './components/ProjectList';
-import Dashboard from './components/Dashboard';
+import ProjectMain from './components/ProjectMain'
+import Dashboard from './pages/Dashboard';
+
 
 // ***Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -44,7 +46,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="flex-column justify-flex-start min-100-vh">
+        <div className="flex-column justify-flex-start min-vh-100">
           <Header />
           <div className="container">
             <Routes>
@@ -71,6 +73,10 @@ function App() {
               <Route 
                 path="/projectList" 
                 element={<ProjectList />} 
+              />    
+              <Route 
+                path="/projectMain" 
+                element={<ProjectMain />} 
               />    
             </Routes>
           </div>

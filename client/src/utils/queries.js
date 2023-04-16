@@ -39,13 +39,19 @@ query me {
   }
 }
 `
-export const QUERY_PROJECT = gql`
- query project($projectId: ID!) {
+export const QUERY_SINGLE_PROJECT = gql`
+query ($projectId: ID!) {
   project(projectId: $projectId) {
+    _id
     projectName
+    initialCode
     projectDescription
+    createdAt
     iterations {
+      _id
+      instruction
       block
+      createdAt
     }
   }
 }

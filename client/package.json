@@ -13,16 +13,20 @@
     "dotenv-webpack": "^8.0.1",
     "graphql": "^15.4.0",
     "jwt-decode": "^3.1.2",
+    "prismjs": "^1.29.0",
     "react": "^17.0.1",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^17.0.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.1",
+    "react-simple-code-editor": "^0.13.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "unix-timestamp": "^1.0.3",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start-client": "react-scripts start",
+    "build": "react-scripts build && (cd ../server && npm install)",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

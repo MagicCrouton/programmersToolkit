@@ -2,6 +2,10 @@ const { Schema, model } = require('mongoose');
 
 
 const codeBlockSchema = new Schema({
+  instructions: 
+    {
+      type: String,
+    },
   block: 
     {
       type: String,
@@ -9,5 +13,5 @@ const codeBlockSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const CodeBlock = model('codeBlock', codeBlockSchema)
+const CodeBlock = model('CodeBlock', codeBlockSchema)
 module.exports = CodeBlock
