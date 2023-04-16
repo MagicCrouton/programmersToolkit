@@ -4,6 +4,7 @@ import { NEW_PROJECT } from '../../utils/mutations';
 import { Form, Button} from 'react-bootstrap';
 import AuthService from "../../utils/auth"
 // import {newCode, editCode} from '../utils/API'
+import './newProject.css'
 
 
 const NewProjectForm = () => {
@@ -39,7 +40,10 @@ const NewProjectForm = () => {
   return (
     <>
       {/* This is needed for the validation functionality above */}
-      <Form onSubmit={handleFormSubmit} className='form-content'>
+
+      <Form onSubmit={handleFormSubmit}>
+      <div class="page-content">
+        <div id="form-content">
         <h1>Lets Start Your New Project {AuthService.getProfile().data.username}</h1>
         
         <Form.Group>
@@ -87,6 +91,8 @@ const NewProjectForm = () => {
           Submit
         </Button>
         {/* {error && <div>Sign up failed</div>} */}
+        </div>
+        </div>
       </Form>
     </>
   );
