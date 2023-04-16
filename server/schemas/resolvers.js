@@ -35,7 +35,10 @@ const resolvers = {
 
         // const newProjectUser = await User.findById(context.user._id);
         const firstFetch = await newCode(initialCode)
-        const firstCodeBlock = await CodeBlock.create({block: `${firstFetch}`})
+        const firstCodeBlock = await CodeBlock.create({
+          block: `${firstFetch}`,
+          instructions: `${initialCode}`
+        })
         const newProject = await Project.create({initialCode, projectName, projectDescription});
         // console.log(newProject._id)
         // newProject.iterations.push(firstCodeBlock)
@@ -63,10 +66,12 @@ const resolvers = {
     },
     editProject: async(parent, {currentCode, projectID, prompt}, context) => {
       if (context.user) {
-
         // const newProjectUser = await User.findById(context.user._id);
         let iteration = await editCode(`${currentCode}`, prompt)
-        let nextBlock = await CodeBlock.create({block: `${iteration}`})
+        let nextBlock = await CodeBlock.create({
+          block: `${iteration}`,
+          instructions:`${prompt}`  
+        })
         await Project.findOneAndUpdate(
           {_id: projectID},
           {$addToSet: {iterations: nextBlock}}
@@ -79,17 +84,15 @@ const resolvers = {
   }
       throw new AuthenticationError("You need to be logged in!");
     },
-    saveProject: async(parent, {currentCode, projectID}, context) => {
+    saveProject: async(parent, {currentCode, blockId}, context) => {
       if (context.user) {
 
-        // const newProjectUser = await User.findById(context.user._id);
-        let nextBlock = await CodeBlock.create({block: `${currentCode}`})
-        let updatedProject = await Project.findOneAndUpdate(
-          {_id: projectID},
-          {$addToSet: {iterations: nextBlock}}
+        let update = await CodeBlock.findOneAndUpdate(
+          {_id: blockId},
+          {block: currentCode}
         )
 
-        return nextBlock._id
+        return update
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -126,47 +129,6 @@ const resolvers = {
     },
    
   
-    // fetchAI: async (parent, {userID, initialCode}) => {
-      
-    // }
-
-
-    // ***Add a third argument to the resolver to access data in our `context`(defined middleware in server.js) and lock down this route
-    // addSkill: async (parent, { profileId, skill }, context) => {
-    //   // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
-    //   if (context.user) {
-    //     return Profile.findOneAndUpdate(
-    //       { _id: profileId },
-    //       {
-    //         $addToSet: { skills: skill },
-    //       },
-    //       {
-    //         new: true,
-    //         runValidators: true,
-    //       }
-    //     );
-    //   }
-    //    // If user attempts to execute this mutation and isn't logged in, throw an error
-    //    throw new AuthenticationError('You need to be logged in!');
-    //   },
-      // Set up mutation so a logged in user can only remove their profile and no one else's
-    // removeProfile: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return Profile.findOneAndDelete({ _id: context.user._id });
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
-    // // Make it so a logged in user can only remove a skill from their own profile
-    // removeProjectfromUser: async (parent, { projectId }, context) => {
-    //   if (context.user) {
-    //     return User.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $pull: { projects: projectId }},
-    //       { new: true }
-    //     );
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
     removeProjectfromUser: async (parent, { projectId }, context) => {
       if (context.user) {
         // Remove the project document from the Project collection

@@ -49,7 +49,9 @@ query ($projectId: ID!) {
     createdAt
     iterations {
       _id
+      instruction
       block
+      createdAt
     }
   }
 }

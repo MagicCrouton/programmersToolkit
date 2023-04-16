@@ -16,21 +16,21 @@ const AppNavBar = () => {
       <Navbar id="loginControl">
         <Container fluid>
           <Link to="/">
-            <div class='hover'>
+            <div className='hover'>
               <Navbar.Brand>
                 Home
               </Navbar.Brand>
             </div>
           </Link>
           <Link to="/projectList">
-            <div class='hover'>
+            <div className='hover'>
               <Navbar.Brand>
                 View Project
               </Navbar.Brand>
             </div>
           </Link>
           <Link to="/newproject">
-            <div class='hover'>
+            <div className='hover'>
               <Navbar.Brand>
                 Create Project
               </Navbar.Brand>
@@ -38,7 +38,7 @@ const AppNavBar = () => {
           </Link>
           <Navbar.Collapse id='navbar'>
             <hr color="white"></hr>
-            <Nav class='login hover'>
+            <Nav className='login hover'>
               <Nav.Link as={Link} to='/'>
                 {/* Your Magical Tool Kits */}
               </Nav.Link>
@@ -51,7 +51,7 @@ const AppNavBar = () => {
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
-                <Nav.Link class="hover" onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+                <Nav.Link className="hover" onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
               )}
             </Nav> 
           </Navbar.Collapse>

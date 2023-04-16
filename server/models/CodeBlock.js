@@ -2,6 +2,10 @@ const { Schema, model } = require('mongoose');
 
 
 const codeBlockSchema = new Schema({
+  instructions: 
+    {
+      type: String,
+    },
   block: 
     {
       type: String,

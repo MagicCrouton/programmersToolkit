@@ -30,12 +30,12 @@ const Dashboard = () => {
     <div>
         <h1>Welcome back, {AuthServices.getProfile().data.username}!</h1>
         <button onClick={() => {window.location.assign('/projectList')} }>
-           View/Edit Your Project
+           View/Edit Your Projects
         </button>
         <br></br>
         <br></br>
         <button onClick={() => {window.location.assign('/newproject')} }>
-           Create New Project
+           Create a New Project
         </button>
       <ul>
       {projects && projects.map((project) => (

@@ -1,99 +1,144 @@
 import React, { useState }  from 'react';
-
-import { QUERY_PROJECTMAIN } from '../../utils/queries';
 import { useQuery, useMutation } from '@apollo/client';
-
 import { QUERY_SINGLE_PROJECT } from '../../utils/queries';
 import { EDIT_PROJECT, SAVE_PROJECT } from '../../utils/mutations';
 // import react-syntax
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialOceanic } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { Form, Button} from 'react-bootstrap';
+
+import Editor from 'react-simple-code-editor'
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/themes/prism.css'; //Example style, you can use another
+import { Form } from 'react-bootstrap';
+import timestamp from 'unix-timestamp'
 
 
 const ProjectMain = ({}) => {
+  
     const {loading, data} = useQuery(QUERY_SINGLE_PROJECT, {
       variables: {
         projectId: `${localStorage.getItem('singleProjectView')}`
       }
-    }); 
+    })
+
+    // setCurrentCode(data.project.iterations[projectData.iterations.length - 1].block)
     const projectData = data?.project || {}
 
-    //    ADDING EDIT BUTTON
+    const [prompt, setPrompt] = useState('');
+    const [editProject] = useMutation(EDIT_PROJECT);
+    const [saveProject] = useMutation(SAVE_PROJECT);
+    const [currentCode, setCurrentCode] = useState(``);
+    const [firstLoad, setLoad] = useState(true);
 
-    const [currentCode, setCurrentCode] = useState({currentCode: ''});
-    const [prompt, setPrompt] = useState({prompt: ''});
-    const [editProject] = useMutation(EDIT_PROJECT)
+    // loads blocks into memory
 
-    const handleEdit = async (projectId) => {
-      await editProject({
-        variables: {
-          projectId: projectId,
-          currentCode: currentCode.currentCode,
-          prompt: prompt.prompt
-        }
-      })
+    // let iterationSet = projectData.iterations;
+    // codeSet.codeLength = iterationSet.length;
+    // for (let i=0; i < codeSet.codeLength; i++) {
+    //   codeSet.codeArray[i] = iterationSet[i].block
+    // }
+
+    const updateCode = (code) => {
+      setLoad(false);
+      setCurrentCode(code);
     }
     const handlePromptChange = (event) => {
+      if (firstLoad === true) {
+        setCurrentCode(data.project.iterations[projectData.iterations.length - 1].block)
+        setLoad(false)
+      }
       setPrompt(event.target.value);
     };
-    // console.log(data.project.iterations[0].block)
-    if (loading) {
-        return <h3>Still Loading, please wait</h3>;
 
-}
-// return (
-//   <div>
-//     <h3 className="text-primary">View/Edit Your Project</h3>
-//     <div className="flex-row justify-space-between my-4">
-//       <p>{`${data.project.iterations[0].block}`}</p>
-//     {/* {projectData.iterations.map((CodeBlock) => (
-//         <div key={CodeBlock._id} className="col-12 col-xl-6">
-//           <div className="card mb-3">
-//             <h4 className="card-header bg-dark text-light p-2 m-0">
-//               {CodeBlock._id} <br />
-//             </h4>
-//             <div className="card-body bg-light p-2">
-//               <CodeBlock block={CodeBlock.block} />
-//             </div>
-//           </div>
-//         </div>
-//       ))} */}
-//     </div>
-//   </div>
-// );
+    const handleEdit = async () => {
+      await editProject({
+        variables: {
+          projectId: data.project._id,
+          currentCode: currentCode,
+          prompt: prompt
+        }
+      })
+      // console.log(prompt)
+      // console.log(currentCode)
+      window.location.reload();
+    }
 
-//       }
-// export default ProjectMain;
+    // const handleBlockNav = async (n) => {
+    //   setCurrentBlock(currentBlock + n)
+    //   setCurrentCode(codeSet[(codeSet.codeLength-1) - n])
+    //   console.log(currentCode)
+    // } 
+    
+    const handleSave = async () => {
+      await saveProject({
+        variables: {
+          blockId: projectData.iterations[projectData.iterations.length - 1]._id,
+          currentCode: currentCode,
+        }
+      })
+      window.location.reload();
+    }
+
+    if (loading) { return <h3>Still Loading, please wait</h3> }
+
+
 return (
-  <div>
+  <div className='d-flex flex-row'>
+  <div className='col-1'></div>
+  <div className='col-8'>
     <h3 className="text-primary">View/Edit Your Project</h3>
-    <div className="flex-row justify-space-between my-4">
-      <SyntaxHighlighter language="javascript" style={materialOceanic}>
-        {data.project.iterations[0].block}
-      </SyntaxHighlighter>
-      
-    </div>
+    <br></br>
+    <Editor 
+            value= {firstLoad === true ? data.project.iterations[projectData.iterations.length - 1].block : currentCode}
+            onValueChange={code => updateCode(code)}
+            highlight={code => highlight(code, languages.js)}
+            padding={10}
+            style={{
+              materialOceanic,
+            }}
+     />
     <div>
-    <Form.Group>
-          <Form.Label htmlFor='prompt'>What Would You Like to Edit?</Form.Label>
+      <br></br>
+    <Form.Group className='d-flex flex-column justify-content-center'>
+          <Form.Label htmlFor='prompt'>What would you like changed?</Form.Label>
           <Form.Control
             type='text'
-            placeholder='add/edit your code'
+            placeholder='type what you want changed'
             name='prompt'
             onChange={handlePromptChange}
-            value={prompt.prompt}
+            value={prompt}
             required
           />
           
         </Form.Group>
         <br></br>
       {/* <button onClick={handleEdit}>Edit Project</button> */}
-      <button onClick={() => handleEdit(projectData._Id)}>Edit Project</button>
-
+      <div className='flex-row justify-content-evenly'>
+      <div>
+      <button onClick={() => handleEdit(data)}>Iterate</button>
+      <button onClick={() => handleSave(data)}>Save</button>
+      </div>
     </div>
-    
+    </div>
   </div>
+  <div className='col-1'></div>
+  <div className="col-2 h-50 d-inline-block overflow-auto">
+    <h6 className='d-flex justify-content-center'>previous Iterations</h6>
+    <br></br>
+{projectData.iterations.map((iteration) => (
+        <div key={iteration._id} className="col-sm-4">
+            <button style={{materialOceanic, fontSize: 10}} onClick={() => updateCode(iteration.block)}>
+              <span>{iteration.instruction}{iteration._id},</span>
+              <br></br><br></br>
+              <span>Created: {`${timestamp.toDate(Math.floor(iteration.createdAt)/1000)}`}</span>
+            </button>
+        </div>
+))}
+    </div>
+
+</div>
   
 );
 };
