@@ -4,9 +4,8 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
-    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "start": "cd server && node server.js",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run start-client\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
     "build": "cd client && npm run build"
@@ -30,11 +29,13 @@
     "node": "18.14.2"
   },
   "dependencies": {
+    "apollo-server-express": "^3.6.1",
+    "bcrypt": "^5.0.0",
     "dotenv": "^16.0.3",
-    "http-proxy-middleware": "^2.0.6",
-    "openai": "^3.2.1",
-    "os-browserify": "^0.3.0",
-    "path": "^0.12.7",
-    "react-syntax-highlighter": "^15.5.0"
+    "express": "^4.17.1",
+    "graphql": "^16.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.9.2",
+    "openai": "^3.2.1"
   }
 }
