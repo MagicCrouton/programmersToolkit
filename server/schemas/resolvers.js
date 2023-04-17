@@ -27,22 +27,19 @@ const resolvers = {
 
   Mutation: {
     findSingleProject: async (parent, { projectId }) => {
-      // console.log(projectId)
+
       return Project.findOne({_id: projectId}).populate("iterations");
     },    
     newProject: async(parent, {initialCode, projectName, projectDescription}, context) => {
       if (context.user) {
 
-        // const newProjectUser = await User.findById(context.user._id);
         const firstFetch = await newCode(initialCode)
         const firstCodeBlock = await CodeBlock.create({
           block: `${firstFetch}`,
           instructions: `${initialCode}`
         })
         const newProject = await Project.create({initialCode, projectName, projectDescription});
-        // console.log(newProject._id)
-        // newProject.iterations.push(firstCodeBlock)
-        // await newProject.newCode(initialCode);
+
         await Project.findOneAndUpdate(
           {_id: newProject._id},
           {$addToSet: {iterations: firstCodeBlock}}
@@ -51,18 +48,10 @@ const resolvers = {
           {_id: context.user._id},
           {$addToSet: {projects: newProject}}
         )
-        // newProject.newProject(initialCode);
-        // newProject.iterations.push(firstIteration)
-        // newProjectUser.projects.push(newProject);
-        // newProjectUser.save();
 
         return newProject
       }
       throw new AuthenticationError("You need to be logged in!");
-      // const user = await User.findById({context})
-      // // await 
-      // await user.createCode(initialCode)
-      // // return await newCode(code);
     },
     editProject: async(parent, {currentCode, projectID, prompt}, context) => {
       if (context.user) {
@@ -77,8 +66,6 @@ const resolvers = {
           {$addToSet: {iterations: nextBlock}}
         )
 
-      //   return nextBlock._id
-      // }
       const updatedProject = await Project.findById(projectID).populate('iterations')
     return updatedProject
   }

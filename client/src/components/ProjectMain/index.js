@@ -32,7 +32,6 @@ function ProjectMain({handlePageChange}) {
     const [currentCode, setCurrentCode] = useState(``);
     const [promptLabel, setPromptLabel] = useState('enter what you want to change with this code');
     const [firstLoad, setLoad] = useState(true);
-
   
 
     const updateCode = (code) => {
@@ -64,13 +63,18 @@ function ProjectMain({handlePageChange}) {
     }
 
     
-    const handleSave = async () => {
+    const handleSave = async (id) => {
+      let button = document.getElementById(`${id}`);
+      button.innerHTML = '<i class="fa fa-spinner fa-spin-2x"></i> Loading...';
+      button.disabled = true;
+      button.onclick = null;
       await saveProject({
         variables: {
           blockId: projectData.iterations[projectData.iterations.length - 1]._id,
           currentCode: currentCode,
         }
       })
+      handlePageChange('')
       handlePageChange('SingleProjectView')
     }
 
