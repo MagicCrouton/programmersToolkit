@@ -13,17 +13,20 @@ function NewProjectForm({handlePageChange}) {
   // Set up our mutation with an option to handle errors
   const [newProject] = useMutation(NEW_PROJECT);
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-      await newProject({
+  const handleFormSubmit = async (id) => {
+      let button = document.getElementById(`${id}`);
+      button.innerHTML = '<i class="fa fa-spinner fa-spin-2x"></i> Loading...';
+      button.disabled = true;
+      button.onclick = null;
+      const {data} = await newProject({
         variables: {
           projectName: formState.projectName,
           projectDescription: formState.projectDescription,
           initialCode: formState.initialCode
         }
       });
-      handlePageChange('')
-      handlePageChange('ViewProjects')
+      localStorage.setItem('singleProjectView', `${data.newProject._id}`)
+      handlePageChange('SingleProjectView')
   };
 
   const handleChange = (event) => {
@@ -32,10 +35,7 @@ function NewProjectForm({handlePageChange}) {
   };
 
   return (
-    <>
-      {/* This is needed for the validation functionality above */}
 
-      <Form onSubmit={handleFormSubmit}>
       <div className="page-content">
         <div id="form-content">
         <h1>Lets Start Your New Project {AuthService.getProfile().data.username}</h1>
@@ -79,17 +79,9 @@ function NewProjectForm({handlePageChange}) {
           <Form.Control.Feedback type='invalid'>Starting prompt is required!</Form.Control.Feedback>
         </Form.Group>
         <br></br><br></br>
-        <Button
-          disabled={!(formState.projectName && formState.projectDescription && formState.initialCode)}
-          type='submit'
-          variant='success'>
-          Submit
-        </Button>
-        {/* {error && <div>Sign up failed</div>} */}
+        <button id='newProjectBtn' onClick={() => handleFormSubmit(`newProjectBtn`)}>Iterate</button>
         </div>
         </div>
-      </Form>
-    </>
   );
 };
 
