@@ -7,7 +7,7 @@ function ProjectRender({userData, handleDelete, handleView}) {
 
   return (
     <div>
-        {userData.projects.map((project) => (
+        {userData?.projects.map((project) => (
             <div key={project._id} className="col-12 col-xl-6">
               <div className="card mb-3">
                 <h4 className="card-header bg-dark text-light p-2 m-0">

@@ -28,7 +28,16 @@ function ProjectMain({handlePageChange}) {
 
     const [prompt, setPrompt] = useState('');
     const [editProject] = useMutation(EDIT_PROJECT);
-    const [saveProject] = useMutation(SAVE_PROJECT);
+    const [saveProject] = useMutation(SAVE_PROJECT, {
+      refetchQueries: [
+        {
+          query: QUERY_SINGLE_PROJECT,
+          variables: {
+            projectId: `${localStorage.getItem('singleProjectView')}`
+          }
+        }
+      ]
+    } );
     const [currentCode, setCurrentCode] = useState(``);
     const [promptLabel, setPromptLabel] = useState('enter what you want to change with this code');
     const [firstLoad, setLoad] = useState(true);

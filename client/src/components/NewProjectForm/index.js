@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { NEW_PROJECT } from '../../utils/mutations';
+import { QUERY_ME }  from "../../utils/queries"
 import { Form, Button} from 'react-bootstrap';
 import AuthService from "../../utils/auth"
 // import {newCode, editCode} from '../utils/API'
@@ -11,7 +12,13 @@ function NewProjectForm({handlePageChange}) {
   const [formState, setFormState] = useState({projectName: '', projectDescription: '', initialCode: '',});
 
   // Set up our mutation with an option to handle errors
-  const [newProject] = useMutation(NEW_PROJECT);
+  const [newProject] = useMutation(NEW_PROJECT, {
+    refetchQueries: [
+      {
+        query: QUERY_ME
+      }
+    ]
+  });
 
   const handleFormSubmit = async (id) => {
       let button = document.getElementById(`${id}`);
